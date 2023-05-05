@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Univariate Statistics Analysis</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Univariate Statistics Analysis</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <code>univar</code> function is called to produce univariate-type
+summary statistics for numeric variables. A typical example of using the
+<code>univar</code> function is to create a <code>tbl</code> chunk as
+shown below for summarizing N, MEAN (SD), MEDIAN, RANGE, IQ Range for
+the <code>Age</code> variable in adsl.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEANSD&quot;</span>, <span class="st">&quot;MEDIAN&quot;</span>, <span class="st">&quot;RANGE&quot;</span>, <span class="st">&quot;IQRANGE&quot;</span>)),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">0</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="12%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Age (Years)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Mean (SD)</td>
+<td align="left">69.6 (14.40)</td>
+<td align="left">75.6 (6.73)</td>
+<td align="left">72.2 (9.23)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Median</td>
+<td align="left">64.0</td>
+<td align="left">74.0</td>
+<td align="left">75.0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Range</td>
+<td align="left">(52; 85)</td>
+<td align="left">(68; 84)</td>
+<td align="left">(57; 81)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">IQ range</td>
+<td align="left">(63.0; 84.0)</td>
+<td align="left">(71.0; 81.0)</td>
+<td align="left">(71.0; 77.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="customizing-univariate-statistics" class="section level2">
+<h2>Customizing Univariate Statistics</h2>
+<p>Besides the 5 standard univariate statistics shown above that are
+often required in the demographic tables, you can pick any univariate
+statistics from the table below and arrange them in a character vector
+for passing to the <code>statlist</code> argument.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Statlist</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>N</td>
+<td align="center">number of non-missing values</td>
+</tr>
+<tr class="even">
+<td>SUM</td>
+<td align="center">sum</td>
+</tr>
+<tr class="odd">
+<td>MEAN</td>
+<td align="center">mean</td>
+</tr>
+<tr class="even">
+<td>GeoMEAN</td>
+<td align="center">geometric mean</td>
+</tr>
+<tr class="odd">
+<td>SD</td>
+<td align="center">standard deviation</td>
+</tr>
+<tr class="even">
+<td>SE</td>
+<td align="center">standard error</td>
+</tr>
+<tr class="odd">
+<td>CV</td>
+<td align="center">coefficient of variation</td>
+</tr>
+<tr class="even">
+<td>GSD</td>
+<td align="center">geometric standard deviation</td>
+</tr>
+<tr class="odd">
+<td>GSE</td>
+<td align="center">geometric standard error</td>
+</tr>
+<tr class="even">
+<td>MEANSD</td>
+<td align="center">mean (standard deviation)</td>
+</tr>
+<tr class="odd">
+<td>MEANSE</td>
+<td align="center">mean (standard error)</td>
+</tr>
+<tr class="even">
+<td>MEDIAN</td>
+<td align="center">median</td>
+</tr>
+<tr class="odd">
+<td>MIN</td>
+<td align="center">minimum</td>
+</tr>
+<tr class="even">
+<td>MAX</td>
+<td align="center">maximum</td>
+</tr>
+<tr class="odd">
+<td>RANGE</td>
+<td align="center">range</td>
+</tr>
+<tr class="even">
+<td>Q1</td>
+<td align="center">1st quartile</td>
+</tr>
+<tr class="odd">
+<td>Q3</td>
+<td align="center">3rd quartile</td>
+</tr>
+<tr class="even">
+<td>IQRANGE</td>
+<td align="center">inter-quartile range</td>
+</tr>
+<tr class="odd">
+<td>MEDRANGE</td>
+<td align="center">median (range)</td>
+</tr>
+<tr class="even">
+<td>MEDIQRANGE</td>
+<td align="center">median (inter-quartile range)</td>
+</tr>
+<tr class="odd">
+<td>MEAN_CI</td>
+<td align="center">mean (95% C.I.)</td>
+</tr>
+<tr class="even">
+<td>GeoMEAN_CI</td>
+<td align="center">geometric mean (95% C.I.)</td>
+</tr>
+</tbody>
+</table>
+<p>A customized example is shown below for displaying N, Mean (95%
+C.I.), and Geometric Mean (95% C.I.) for the <code>Age</code> variable
+in adsl.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEAN_CI&quot;</span>, <span class="st">&quot;GeoMEAN_CI&quot;</span>)),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">0</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="24%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Age (Years)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Mean (95% C.I.)</td>
+<td align="left">69.6 (51.72; 87.48)</td>
+<td align="left">75.6 (67.24; 83.96)</td>
+<td align="left">72.2 (60.74; 83.66)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Geometric Mean (95% C.I.)</td>
+<td align="left">68.4 (52.72; 88.73)</td>
+<td align="left">75.4 (67.51; 84.13)</td>
+<td align="left">71.7 (60.50; 84.94)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="decimal-precision" class="section level2">
+<h2>Decimal Precision</h2>
+<p>The decimal precision to be used in display of univariate statistics
+is comprised of two pieces. The base decimal precision is what controls
+the base number of decimals to be used, this can be set using the
+<code>decimal</code> argument. The precision extra is what controls the
+difference between the precision used for different statistics, this is
+controlled using the option <code>tidytlg.precision.extra</code>. The
+precision extra is the amount precision will need to be adjusted from
+the base precision for each different statistic. The default of the
+precision extra is set by following our table and listing conventions:
+Range has a precision extra of 0, Mean and Median have a precision extra
+of 1, SD has a precision extra of 2. To see a full list of precision
+extra defaults, please type
+<code>options(&quot;tidytlg.precision.extra&quot;)</code> in your console. An
+example function call of <code>univar</code> is shown below for
+presenting the data using a base decimal value of 2.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;BMIBL&quot;</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">2</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="10%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Age (Years)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Mean (SD)</td>
+<td align="left">27.080 (3.6424)</td>
+<td align="left">27.180 (3.4419)</td>
+<td align="left">27.760 (2.4795)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Median</td>
+<td align="left">27.600</td>
+<td align="left">27.300</td>
+<td align="left">28.100</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Range</td>
+<td align="left">(21.90; 30.40)</td>
+<td align="left">(23.90; 32.00)</td>
+<td align="left">(24.90; 31.40)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">IQ range</td>
+<td align="left">(25.100; 30.400)</td>
+<td align="left">(23.900; 28.800)</td>
+<td align="left">(26.100; 28.300)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="data-driven-precision" class="section level2">
+<h2>Data Driven Precision</h2>
+<p>While static precision is useful in some cases, data driven precision
+is also available. This is controlled using the
+<code>precisionby</code>, <code>precisionon</code>, and
+<code>decimal</code> arguments. <code>precisionby</code> tells the
+function the variable(s) the user would like to compute the precision
+using. This could be variables such as PARAMCD if the precision is to be
+varied between parameter. <code>precisionon</code> is the variable that
+should be used when calculating how many base decimal places are present
+in the data. The last piece to data drive precision is the
+<code>decimal</code> argument which gives us a cap for base precision
+values. This can be used to help avoid unnecessarily long decimals in
+your final output.</p>
+<p>A customized example is shown below for presenting the univariate
+summary of vital signs data using PARAMCD as the by variable. In
+addition, we would like the precision to be data driven and varied by
+parameter, which can be achieved by setting
+<code>precisionby = &quot;PARAMCD&quot;</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowbyvar =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">precisionby =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">4</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="10%" />
+<col width="19%" />
+<col width="19%" />
+<col width="19%" />
+<col width="11%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">PARAMCD</th>
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">DIABP</td>
+<td align="left">DIABP</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">DIABP</td>
+<td align="left">N</td>
+<td align="left">186</td>
+<td align="left">147</td>
+<td align="left">204</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">DIABP</td>
+<td align="left">Mean (SD)</td>
+<td align="left">71.9 (9.75)</td>
+<td align="left">71.6 (7.12)</td>
+<td align="left">68.8 (10.34)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">DIABP</td>
+<td align="left">Median</td>
+<td align="left">71.5</td>
+<td align="left">72.0</td>
+<td align="left">69.0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">DIABP</td>
+<td align="left">Range</td>
+<td align="left">(50; 92)</td>
+<td align="left">(50; 87)</td>
+<td align="left">(43; 101)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">DIABP</td>
+<td align="left">IQ range</td>
+<td align="left">(65.0; 78.0)</td>
+<td align="left">(68.0; 77.0)</td>
+<td align="left">(60.0; 76.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">HEIGHT</td>
+<td align="left">HEIGHT</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">HEIGHT</td>
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">HEIGHT</td>
+<td align="left">Mean (SD)</td>
+<td align="left">161.696 (14.0567)</td>
+<td align="left">172.364 (9.1494)</td>
+<td align="left">163.576 (13.0260)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">HEIGHT</td>
+<td align="left">Median</td>
+<td align="left">162.560</td>
+<td align="left">175.260</td>
+<td align="left">162.560</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">HEIGHT</td>
+<td align="left">Range</td>
+<td align="left">(147.32; 180.34)</td>
+<td align="left">(158.24; 181.61)</td>
+<td align="left">(147.32; 177.80)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">HEIGHT</td>
+<td align="left">IQ range</td>
+<td align="left">(148.590; 169.670)</td>
+<td align="left">(168.910; 177.800)</td>
+<td align="left">(154.940; 175.260)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">PULSE</td>
+<td align="left">PULSE</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">PULSE</td>
+<td align="left">N</td>
+<td align="left">186</td>
+<td align="left">147</td>
+<td align="left">204</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">PULSE</td>
+<td align="left">Mean (SD)</td>
+<td align="left">69.4 (9.15)</td>
+<td align="left">64.9 (10.18)</td>
+<td align="left">70.5 (9.87)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">PULSE</td>
+<td align="left">Median</td>
+<td align="left">70.0</td>
+<td align="left">64.0</td>
+<td align="left">70.0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">PULSE</td>
+<td align="left">Range</td>
+<td align="left">(52; 94)</td>
+<td align="left">(50; 98)</td>
+<td align="left">(50; 97)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">PULSE</td>
+<td align="left">IQ range</td>
+<td align="left">(61.0; 76.0)</td>
+<td align="left">(58.0; 70.0)</td>
+<td align="left">(62.0; 76.5)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">SYSBP</td>
+<td align="left">SYSBP</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SYSBP</td>
+<td align="left">N</td>
+<td align="left">186</td>
+<td align="left">147</td>
+<td align="left">204</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">SYSBP</td>
+<td align="left">Mean (SD)</td>
+<td align="left">132.0 (12.02)</td>
+<td align="left">127.5 (12.58)</td>
+<td align="left">135.8 (23.65)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SYSBP</td>
+<td align="left">Median</td>
+<td align="left">131.0</td>
+<td align="left">130.0</td>
+<td align="left">132.5</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">SYSBP</td>
+<td align="left">Range</td>
+<td align="left">(100; 167)</td>
+<td align="left">(95; 151)</td>
+<td align="left">(95; 198)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SYSBP</td>
+<td align="left">IQ range</td>
+<td align="left">(123.0; 138.0)</td>
+<td align="left">(122.0; 137.0)</td>
+<td align="left">(116.0; 150.5)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">TEMP</td>
+<td align="left">TEMP</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">TEMP</td>
+<td align="left">N</td>
+<td align="left">61</td>
+<td align="left">49</td>
+<td align="left">68</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">TEMP</td>
+<td align="left">Mean (SD)</td>
+<td align="left">36.481 (0.3491)</td>
+<td align="left">36.537 (0.4374)</td>
+<td align="left">36.660 (0.2837)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">TEMP</td>
+<td align="left">Median</td>
+<td align="left">36.440</td>
+<td align="left">36.560</td>
+<td align="left">36.585</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">TEMP</td>
+<td align="left">Range</td>
+<td align="left">(35.61; 37.67)</td>
+<td align="left">(34.28; 37.17)</td>
+<td align="left">(35.89; 37.33)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">TEMP</td>
+<td align="left">IQ range</td>
+<td align="left">(36.220; 36.720)</td>
+<td align="left">(36.390; 36.720)</td>
+<td align="left">(36.470; 36.915)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">WEIGHT</td>
+<td align="left">WEIGHT</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">WEIGHT</td>
+<td align="left">N</td>
+<td align="left">47</td>
+<td align="left">33</td>
+<td align="left">54</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">WEIGHT</td>
+<td align="left">Mean (SD)</td>
+<td align="left">69.170 (10.1753)</td>
+<td align="left">82.795 (11.2792)</td>
+<td align="left">78.472 (15.5886)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">WEIGHT</td>
+<td align="left">Median</td>
+<td align="left">71.670</td>
+<td align="left">79.380</td>
+<td align="left">75.070</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">WEIGHT</td>
+<td align="left">Range</td>
+<td align="left">(53.07; 80.74)</td>
+<td align="left">(59.88; 102.51)</td>
+<td align="left">(53.75; 99.79)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">WEIGHT</td>
+<td align="left">IQ range</td>
+<td align="left">(54.430; 78.470)</td>
+<td align="left">(78.470; 88.450)</td>
+<td align="left">(63.960; 90.720)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>While data driven precision is usually done with a by variable it
+doesn’t always have to. The <code>precisionon</code> argument can be
+used to calculate data driven precision on a single variable. This might
+be useful if a table template is going to be used multiple times or if
+multiple parts of the table are using a similar call but need to have
+different data driven precision. The following example uses the variable
+CHG to calculate precision, similar to the above example we still use
+<code>decimal = 4</code> to cap our decimal spaces at 4.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;CHG&quot;</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">precisionon =</span> <span class="st">&quot;CHG&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">4</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="17%" />
+<col width="17%" />
+<col width="19%" />
+<col width="13%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">186</td>
+<td align="left">147</td>
+<td align="left">204</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Mean (SD)</td>
+<td align="left">0.3 (12.49)</td>
+<td align="left">1.5 (9.87)</td>
+<td align="left">-5.5 (11.86)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Median</td>
+<td align="left">0.0</td>
+<td align="left">1.0</td>
+<td align="left">-7.0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Range</td>
+<td align="left">(-44; 33)</td>
+<td align="left">(-31; 24)</td>
+<td align="left">(-32; 30)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">IQ range</td>
+<td align="left">(-7.0; 8.0)</td>
+<td align="left">(-6.0; 7.0)</td>
+<td align="left">(-14.0; 0.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Another use case for the <code>precisionon</code> argument could be
+if you need to calculate the summary on one variable but use another for
+precision for table output formatting. The following example uses both
+<code>precisionby</code> and <code>precisionon</code> to show how they
+can be used together to make special tables. For this table, we are
+creating an element of the table that summarizes AVAL but uses CHG to
+calculate precision. This allows us to have consistent formatting
+throughout the table even though the two variables may have different
+precision. We also calculate precision by PARAMCD since the output table
+will be presented using that as a by variable.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowbyvar =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">precisionby =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">precisionon =</span> <span class="st">&quot;CHG&quot;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">4</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="11%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="12%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">PARAMCD</th>
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SYSBP</td>
+<td align="left">SYSBP</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SYSBP</td>
+<td align="left">N</td>
+<td align="left">186</td>
+<td align="left">147</td>
+<td align="left">204</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">SYSBP</td>
+<td align="left">Mean (SD)</td>
+<td align="left">132.0 (12.02)</td>
+<td align="left">127.5 (12.58)</td>
+<td align="left">135.8 (23.65)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SYSBP</td>
+<td align="left">Median</td>
+<td align="left">131.0</td>
+<td align="left">130.0</td>
+<td align="left">132.5</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">SYSBP</td>
+<td align="left">Range</td>
+<td align="left">(100; 167)</td>
+<td align="left">(95; 151)</td>
+<td align="left">(95; 198)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SYSBP</td>
+<td align="left">IQ range</td>
+<td align="left">(123.0; 138.0)</td>
+<td align="left">(122.0; 137.0)</td>
+<td align="left">(116.0; 150.5)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

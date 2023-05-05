@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Manipulating tbl data frame</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Manipulating tbl data frame</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <code>tbl</code> data frame is the main input to the
+<code>gentlg</code> function for creating the RTF/HTML outputs. This
+vignette will show you the <code>tbl</code> structure and how the
+<code>tbl</code> variables are in action for rendering the RTF/HTML
+outputs.</p>
+<div id="basic-tbl-data-frame" class="section level3">
+<h3>Basic tbl data frame</h3>
+<p>The basic variables of tbl includes label, col1, col2, …, coln,
+where</p>
+<ul>
+<li><p>label: row text displayed on the 1st column of the table</p></li>
+<li><p>col1: statistic results displayed on the 2nd column of the
+table</p></li>
+<li><p>col2: statistic results displayed on the 3rd column of the
+table.</p></li>
+</ul>
+<p>The example below shows you a very basic tbl data frame, and how this
+tbl is transformed through the <code>gentlg</code> function call to
+create the HTML output.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytlg)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               <span class="sc">~</span>label,      <span class="sc">~</span>col1,      <span class="sc">~</span>col2,      <span class="sc">~</span>col3,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Analysis Set: ITT&quot;</span>,       <span class="st">&quot;86&quot;</span>,       <span class="st">&quot;84&quot;</span>,       <span class="st">&quot;84&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Age (Years)&quot;</span>,         <span class="cn">NA</span>,         <span class="cn">NA</span>,         <span class="cn">NA</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;N&quot;</span>,       <span class="st">&quot;86&quot;</span>,       <span class="st">&quot;84&quot;</span>,       <span class="st">&quot;84&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">col1</th>
+<th align="left">col2</th>
+<th align="left">col3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Analysis Set: ITT</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+</tr>
+<tr class="even">
+<td align="left">Age (Years)</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># render tbl</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gentlg</span>(<span class="at">huxme       =</span> tbl,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">format      =</span> <span class="st">&quot;HTML&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">orientation =</span> <span class="st">&quot;landscape&quot;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">opath       =</span> <span class="st">&quot;.&quot;</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">file        =</span> <span class="st">&quot;DEMO1&quot;</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">title       =</span> <span class="st">&quot;Basic tbl without formatting&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">colheader   =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Active 1&quot;</span>, <span class="st">&quot;Active 2&quot;</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">print.hux =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">wcol        =</span> .<span class="dv">30</span>)</span></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; width: 100%; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-2">
+<col style="width: 30%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><tr>
+<td colspan="4" style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: bold; font-size: 10pt;"><div style="border-top :1pt solid; border-bottom :1pt solid; "> <div style="text-indent: -36px; padding-left: 36px;"> DEMO1:   Basic tbl without formatting</div> </td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Placebo</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 1</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 2</th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">Analysis Set: ITT</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">Age (Years)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">N</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<td colspan="4" style="vertical-align: bottom; text-align: right; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal; font-size: 8pt;"><div style="border-bottom:1pt solid"> [demo1.html][] 04MAY2023, 13:11</td></tr>
+</table>
+
+</div>
+</div>
+<div id="formatting-table" class="section level2">
+<h2>Formatting table</h2>
+<p>The above example does not have any formatting in actions on the
+table. To enable formatting, additional variables will need to be
+created in the <code>tbl</code> data frame.</p>
+<div id="add-new-row" class="section level3">
+<h3>Add new row</h3>
+<p>For inserting a blank line prior to the 2nd row (i.e. Age (Years)),
+we will need to add the <code>newrows</code> variable with value =
+<code>1</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">newrows =</span> <span class="fu">case_when</span>(label <span class="sc">==</span> <span class="st">&quot;Age (Years)&quot;</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                             <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">col1</th>
+<th align="left">col2</th>
+<th align="left">col3</th>
+<th align="right">newrows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Analysis Set: ITT</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Age (Years)</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># render tbl</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gentlg</span>(<span class="at">huxme       =</span> tbl,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">format      =</span> <span class="st">&quot;HTML&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">orientation =</span> <span class="st">&quot;landscape&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">opath       =</span> <span class="st">&quot;.&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">file        =</span> <span class="st">&quot;DEMO2&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">title       =</span> <span class="st">&quot;Adding the variable of newrows&quot;</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">colheader   =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Active 1&quot;</span>, <span class="st">&quot;Active 2&quot;</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">print.hux =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">wcol        =</span> .<span class="dv">30</span>)</span></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; width: 100%; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-3">
+<col style="width: 30%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><tr>
+<td colspan="4" style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: bold; font-size: 10pt;"><div style="border-top :1pt solid; border-bottom :1pt solid; "> <div style="text-indent: -36px; padding-left: 36px;"> DEMO2:   Adding the variable of newrows</div> </td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Placebo</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 1</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 2</th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">Analysis Set: ITT</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">Age (Years)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">N</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<td colspan="4" style="vertical-align: bottom; text-align: right; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal; font-size: 8pt;"><div style="border-bottom:1pt solid"> [demo2.html][] 04MAY2023, 13:11</td></tr>
+</table>
+
+</div>
+<div id="add-indentation" class="section level3">
+<h3>Add indentation</h3>
+<p>For adding 1 indentation to the <code>N</code> row, we will need to
+add the <code>indentme</code> variable with value = 1, which indicates 1
+indentation (2 will result in 2 indentation, and so on).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">indentme =</span> <span class="fu">case_when</span>(label <span class="sc">==</span> <span class="st">&quot;N&quot;</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                             <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">col1</th>
+<th align="left">col2</th>
+<th align="left">col3</th>
+<th align="right">newrows</th>
+<th align="right">indentme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Analysis Set: ITT</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Age (Years)</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># render tbl</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gentlg</span>(<span class="at">huxme       =</span> tbl,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">format      =</span> <span class="st">&quot;HTML&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">orientation =</span> <span class="st">&quot;landscape&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">opath       =</span> <span class="st">&quot;.&quot;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">file        =</span> <span class="st">&quot;DEMO3&quot;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">title       =</span> <span class="st">&quot;Adding the variable of indentme&quot;</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">colheader   =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Active 1&quot;</span>, <span class="st">&quot;Active 2&quot;</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">print.hux =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">wcol        =</span> .<span class="dv">30</span>)</span></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; width: 100%; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-4">
+<col style="width: 30%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><tr>
+<td colspan="4" style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: bold; font-size: 10pt;"><div style="border-top :1pt solid; border-bottom :1pt solid; "> <div style="text-indent: -36px; padding-left: 36px;"> DEMO3:   Adding the variable of indentme</div> </td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Placebo</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 1</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 2</th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 17.76px"> Analysis Set: ITT</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 17.76px"> Age (Years)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 35.52px"> N</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<td colspan="4" style="vertical-align: bottom; text-align: right; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal; font-size: 8pt;"><div style="border-bottom:1pt solid"> [demo3.html][] 04MAY2023, 13:11</td></tr>
+</table>
+
+</div>
+<div id="enable-bold-font" class="section level3">
+<h3>Enable bold font</h3>
+<p>To enable bolding on the row of <code>Age (Years)</code>, the
+<code>boldme</code> variable with value = 1 will need to be added.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">boldme =</span> <span class="fu">case_when</span>(label <span class="sc">==</span> <span class="st">&quot;Age (Years)&quot;</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                             <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">col1</th>
+<th align="left">col2</th>
+<th align="left">col3</th>
+<th align="right">newrows</th>
+<th align="right">indentme</th>
+<th align="right">boldme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Analysis Set: ITT</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Age (Years)</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">86</td>
+<td align="left">84</td>
+<td align="left">84</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># render tbl</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gentlg</span>(<span class="at">huxme       =</span> tbl,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">format      =</span> <span class="st">&quot;HTML&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">orientation =</span> <span class="st">&quot;landscape&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">opath       =</span> <span class="st">&quot;.&quot;</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">file        =</span> <span class="st">&quot;DEMO4&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">title       =</span> <span class="st">&quot;Adding the variable of boldme&quot;</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">colheader   =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Active 1&quot;</span>, <span class="st">&quot;Active 2&quot;</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">print.hux =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">wcol        =</span> .<span class="dv">30</span>)</span></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; width: 100%; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-5">
+<col style="width: 30%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><tr>
+<td colspan="4" style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: bold; font-size: 10pt;"><div style="border-top :1pt solid; border-bottom :1pt solid; "> <div style="text-indent: -36px; padding-left: 36px;"> DEMO4:   Adding the variable of boldme</div> </td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Placebo</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 1</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 2</th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 17.76px"> Analysis Set: ITT</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: bold; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 17.76px"> Age (Years)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 35.52px"> N</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">86</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">84</td></tr>
+<tr>
+<td colspan="4" style="vertical-align: bottom; text-align: right; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal; font-size: 8pt;"><div style="border-bottom:1pt solid"> [demo4.html][] 04MAY2023, 13:11</td></tr>
+</table>
+
+<p>There is another formatting variable called <code>newpage</code>,
+where assigning <code>newpage = 1</code> will start a new page in the
+output.</p>
+</div>
+</div>
+<div id="fomatting-functions" class="section level2">
+<h2>Fomatting functions</h2>
+<p>Besides manually adding the formatting variables to <code>tbl</code>,
+we have developed several formatting functions to facilitate the
+formatting process:</p>
+<ul>
+<li><p><code>add_newrows</code>: add <code>newrows</code> variable to
+the <code>tbl</code> based on <code>row_type</code></p></li>
+<li><p><code>add_indent</code>: add <code>indentme</code> variable to
+the <code>tbl</code> based on <code>row_type</code></p></li>
+<li><p><code>add_newpage</code>: add <code>newpage</code> variable to
+the <code>tbl</code> based on <code>row_type</code>.</p></li>
+</ul>
+<p>The <code>row_type</code> variable is created in the tbl by calling
+the <code>freq</code>, <code>nested_freq</code>, and <code>univar</code>
+functions, which is used by the above functions for setting up the
+formatting variables. The <code>tbl</code> example below is obtained by
+calling the <code>univar</code> function for summarizing the age
+statistics in the CDISC ADSL dataset. After calling the
+<code>univar</code> function, we create the <code>anbr</code> (analysis
+number) variable as the identifier of this <code>tbl</code> chunk.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEANSD&quot;</span>)),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">0</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">anbr =</span> <span class="st">&quot;01&quot;</span>) </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="15%" />
+<col width="17%" />
+<col width="15%" />
+<col width="15%" />
+<col width="11%" />
+<col width="15%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+<th align="left">anbr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Age (Years)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+<td align="left">01</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+<td align="left">01</td>
+</tr>
+<tr class="odd">
+<td align="left">Mean (SD)</td>
+<td align="left">69.6 (14.40)</td>
+<td align="left">75.6 (6.73)</td>
+<td align="left">72.2 (9.23)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">01</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>add_format</code> function, which incorporates all 3
+formatting functions above (<code>add_indent</code>,
+<code>add_newrows</code>, <code>add_newpage</code>), can then be applied
+to the <code>tbl</code> for creating the formatting variables.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEANSD&quot;</span>)),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">0</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">anbr =</span> <span class="st">&quot;01&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_format</span>()</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="13%" />
+<col width="12%" />
+<col width="12%" />
+<col width="9%" />
+<col width="5%" />
+<col width="9%" />
+<col width="9%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="left">anbr</th>
+<th align="right">indentme</th>
+<th align="right">roworder</th>
+<th align="right">newrows</th>
+<th align="right">newpage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Age (Years)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="left">01</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="left">01</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Mean (SD)</td>
+<td align="left">69.6 (14.40)</td>
+<td align="left">75.6 (6.73)</td>
+<td align="left">72.2 (9.23)</td>
+<td align="left">VALUE</td>
+<td align="left">01</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># render tbl</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gentlg</span>(<span class="at">huxme       =</span> tbl,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">tlf         =</span> <span class="st">&quot;Table&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">format      =</span> <span class="st">&quot;HTML&quot;</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">orientation =</span> <span class="st">&quot;landscape&quot;</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">opath       =</span> <span class="st">&quot;.&quot;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">file        =</span> <span class="st">&quot;DEMO5&quot;</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">title       =</span> <span class="st">&quot;Using row_type to set up indentation&quot;</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">colheader   =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Active 1&quot;</span>, <span class="st">&quot;Active 2&quot;</span>),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">print.hux =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">wcol        =</span> .<span class="dv">30</span>)</span></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; width: 100%; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-7">
+<col style="width: 30%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><col style="width: 23.3333333333333%"><tr>
+<td colspan="4" style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: bold; font-size: 10pt;"><div style="border-top :1pt solid; border-bottom :1pt solid; "> <div style="text-indent: -36px; padding-left: 36px;"> DEMO5:   Using row_type to set up indentation</div> </td></tr>
+<tr>
+<th style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Placebo</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 1</th><th style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="border-bottom:1pt solid"> Active 2</th></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 17.76px"> Age (Years)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"></td></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 35.52px"> N</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">5</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">5</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">5</td></tr>
+<tr>
+<td style="vertical-align: bottom; text-align: left; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;"><div style="text-indent: -17.76px; padding-left: 53.28px"> Mean (SD)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">69.6 (14.40)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">75.6 (6.73)</td><td style="vertical-align: bottom; text-align: center; white-space: normal; padding: 6pt 1pt 6pt 1pt; font-weight: normal; font-size: 9pt;">72.2 (9.23)</td></tr>
+<tr>
+<td colspan="4" style="vertical-align: bottom; text-align: right; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal; font-size: 8pt;"><div style="border-bottom:1pt solid"> [demo5.html][] 04MAY2023, 13:11</td></tr>
+</table>
+
+<p>The default indentation for each row_type is shown below.</p>
+<table>
+<thead>
+<tr class="header">
+<th>row_type</th>
+<th align="center">default indentation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TABLE_BY_HEADER</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td>BY_HEADER[1-9]</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td>HEADER</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td>N</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td>VALUE</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td>NESTED</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

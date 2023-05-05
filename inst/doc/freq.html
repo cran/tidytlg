@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Frequency Analysis</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Frequency Analysis</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <code>freq</code> and <code>nested_freq</code> functions are
+called to produce categorical-type summary statistics (i.e. counts and
+percentages) for character variables. These functions can be used to
+create all different types of categorical summary statistics tables.</p>
+<div id="counts-statlist-statlistn" class="section level3">
+<h3>Counts: statlist = statlist(“n”)</h3>
+<p>There are many uses for <code>freq</code>, the first one we’ll show
+is to create the first row of analysis set summary of population counts
+in the output. In the following table the <code>subset</code> argument
+is used to create the one row summary with the row heading specified in
+the <code>rowtext</code> argument.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;ITTFL&quot;</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n&quot;</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subset =</span> ITTFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowtext =</span> <span class="st">&quot;Analysis set: ITT&quot;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Analysis set: ITT</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="big-n-row-counts-and-percentages-statlist-statlistcn-n-x.x" class="section level3">
+<h3>Big N row, counts and percentages: statlist = statlist(c(“N”, “n
+(x.x%)”))</h3>
+<p>A typical call of using the <code>freq</code> function is to create
+the <code>tbl</code> chunk with:</p>
+<ul>
+<li><p>the row of big N indicating number of subjects having values in
+the character variable for each treatment group</p></li>
+<li><p>summary of counts and percentages for each category in the
+character variable such as age groups, gender, race, ethnicity,
+etc.</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sex</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">F</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">3 (60.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">M</td>
+<td align="left">3 (60.0%)</td>
+<td align="left">4 (80.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="using-factor-to-order-category-summary" class="section level3">
+<h3>Using factor to order category summary</h3>
+<p>In the above table, <code>F</code> appears first and then
+<code>M</code> is shown. This is because <code>SEX</code> is a character
+variable and alphabetical sorting is applied to the summarized results.
+We can convert <code>SEX</code> to a factor variable with the customized
+order and labels for enabling the user-defined sorting.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sex</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Male</td>
+<td align="left">3 (60.0%)</td>
+<td align="left">4 (80.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Female</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">3 (60.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="counts-denominators-and-percentages-statlist-statlistcnn-x.x" class="section level3">
+<h3>Counts, denominators, and percentages: statlist = statlist(c(“n/N
+(x.x%)”))</h3>
+<p>In some outputs, the table mock-up may require showing the percentage
+denominator, which can be done by specifying
+<code>statlist = statlist(&quot;n/N (x.x%)&quot;)</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>, </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n/N (x.x%)&quot;</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sex</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Male</td>
+<td align="left">3/5 (60.0%)</td>
+<td align="left">4/5 (80.0%)</td>
+<td align="left">2/5 (40.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Female</td>
+<td align="left">2/5 (40.0%)</td>
+<td align="left">1/5 (20.0%)</td>
+<td align="left">3/5 (60.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="by-processing-statlist-statlistcn-n-x.x" class="section level3">
+<h3>By processing: statlist = statlist(c(“N”, “n (x.x%)”))</h3>
+<p>By-processing splits the summary statistics by another character
+variable that can be specified in the argument of <code>rowbyvar</code>
+or <code>tablebyvar</code>. For the example shown below, age group
+categories are summarized by the <code>SEX</code> variable. In this
+scenario, the denominator should also be split by <code>SEX</code> in
+addition to <code>TRT01PN</code>, which can be done by
+<code>statlist(c(&quot;N&quot;,&quot;n (x.x%)&quot;), denoms_by = c(&quot;SEX&quot;, &quot;TRT01PN&quot;))</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;AGEGR1&quot;</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>), <span class="at">denoms_by =</span> <span class="fu">c</span>(<span class="st">&quot;SEX&quot;</span>, <span class="st">&quot;TRT01PN&quot;</span>)),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Age group&quot;</span>) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="15%" />
+<col width="14%" />
+<col width="15%" />
+<col width="16%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+<th align="left">SEX</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Male</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+<td align="left">Male</td>
+</tr>
+<tr class="even">
+<td align="left">Age group</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+<td align="left">Male</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">N</td>
+<td align="right">0</td>
+<td align="left">Male</td>
+</tr>
+<tr class="even">
+<td align="left">65-80</td>
+<td align="left">0</td>
+<td align="left">3 (75.0%)</td>
+<td align="left">1 (50.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Male</td>
+</tr>
+<tr class="odd">
+<td align="left">&lt;65</td>
+<td align="left">2 (66.7%)</td>
+<td align="left">0</td>
+<td align="left">1 (50.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Male</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;80</td>
+<td align="left">1 (33.3%)</td>
+<td align="left">1 (25.0%)</td>
+<td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Male</td>
+</tr>
+<tr class="odd">
+<td align="left">Female</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+<td align="left">Female</td>
+</tr>
+<tr class="even">
+<td align="left">Age group</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+<td align="left">Female</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">N</td>
+<td align="right">0</td>
+<td align="left">Female</td>
+</tr>
+<tr class="even">
+<td align="left">65-80</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">2 (66.7%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Female</td>
+</tr>
+<tr class="odd">
+<td align="left">&lt;65</td>
+<td align="left">1 (50.0%)</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Female</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;80</td>
+<td align="left">1 (50.0%)</td>
+<td align="left">1 (100.0%)</td>
+<td align="left">1 (33.3%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Female</td>
+</tr>
+</tbody>
+</table>
+<p>By default, the denominators are calculated by using
+<code>colvar</code>, <code>tablebyvar</code>, and <code>rowbyvar</code>.
+The above <code>freq</code> function call will also produce the same
+results without specifying the <code>denoms_by</code> argument inside
+the <code>statlist</code> function.</p>
+</div>
+<div id="padding-factor-levels-on-and-off" class="section level3">
+<h3>Padding factor levels on and off</h3>
+<p>When using <code>rowbyvar</code> to create by-processing summaries,
+some levels of the <code>rowvar</code> may have zero records as shown in
+the example below.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;ETHNIC&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;RACE&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Race&quot;</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="22%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="11%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+<th align="left">ETHNIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HISPANIC OR LATINO</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">Race</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">2</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">N</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">WHITE</td>
+<td align="left">2 (100.0%)</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="odd">
+<td align="left">NOT HISPANIC OR LATINO</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">Race</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">WHITE</td>
+<td align="left">3 (100.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+</tbody>
+</table>
+<p>To remove the zero record rows and create the data driven summary,
+users can specify the <code>pad = FALSE</code> in the <code>freq</code>
+function.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;ETHNIC&quot;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;RACE&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Race&quot;</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">pad =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="22%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="11%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+<th align="left">ETHNIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HISPANIC OR LATINO</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">Race</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">2</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">N</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">WHITE</td>
+<td align="left">2 (100.0%)</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">HISPANIC OR LATINO</td>
+</tr>
+<tr class="odd">
+<td align="left">NOT HISPANIC OR LATINO</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">Race</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">N</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+<tr class="even">
+<td align="left">WHITE</td>
+<td align="left">3 (100.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">NOT HISPANIC OR LATINO</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="denominator-dataframe" class="section level3">
+<h3>Denominator Dataframe</h3>
+<p>When using frequency analysis you do not need to always use your main
+dataframe to calculate your denominators. For example, an adverse event
+table may use ADSL as the denominator dataframe instead of ADAE even
+though the counts are coming from ADAE. The example below shows a table
+counting AEDECOD but using ADSL to calculate the denominators.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>adae <span class="ot">&lt;-</span> cdisc_adae <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TRT01AN =</span> TRTAN)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> adae <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">denom_df =</span> cdisc_adsl,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;AEDECOD&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>) </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tbl, <span class="dv">10</span>))</span></code></pre></div>
+<table>
+<colgroup>
+<col width="36%" />
+<col width="11%" />
+<col width="11%" />
+<col width="12%" />
+<col width="11%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">APPLICATION SITE PRURITUS</td>
+<td align="left">1 (20.0)</td>
+<td align="left">2 (40.0)</td>
+<td align="left">5 (100.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE ERYTHEMA</td>
+<td align="left">1 (20.0)</td>
+<td align="left">1 (20.0)</td>
+<td align="left">4 (80.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">FATIGUE</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">2 (40.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">ACTINIC KERATOSIS</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE IRRITATION</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE PAIN</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE VESICLES</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">CALCULUS URETHRAL</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">DEPRESSED MOOD</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">DYSPEPSIA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="by-processing-and-denominators-statlist-statlistcn-x.x-denoms_by-trt01an" class="section level3">
+<h3>By processing and denominators: statlist = statlist(c(“n (x.x)”),
+denoms_by = “TRT01AN”)</h3>
+<p>When using by variables such as <code>tablebyvar</code> and
+<code>rowbyvar</code> the denominators may need to be changed to work
+correctly. This also works in conjunction with the <code>denom_df</code>
+argument. By default, the denominators are calculated by using
+<code>colvar</code>, <code>tablebyvar</code>, and <code>rowbyvar</code>.
+This works well if you are using the same dataframe for counts and
+denominators but this is not always the case. In the following example
+we are doing a similar table as above but using AESEV as a
+<code>rowbyvar</code>. In this example we don’t want our denoms by AESEV
+since that variable is not in ADSL, which is where our denominators are
+coming from. To change the variables by which our denoms are calculated
+by we use the <code>denoms_by</code> argument to the
+<code>statlist</code> function. Below you can see that we are using only
+our <code>colvar</code> of TRT01PN as our <code>denoms_by</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> adae <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">denom_df =</span> cdisc_adsl,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;AEDECOD&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;AESEV&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;n (x.x)&quot;</span>), <span class="at">denoms_by =</span> <span class="st">&quot;TRT01AN&quot;</span>)) </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tbl, <span class="dv">10</span>))</span></code></pre></div>
+<table>
+<colgroup>
+<col width="32%" />
+<col width="10%" />
+<col width="10%" />
+<col width="11%" />
+<col width="12%" />
+<col width="14%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">group_level</th>
+<th align="left">AESEV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MILD</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BY_HEADER1</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="even">
+<td align="left">ACTINIC KERATOSIS</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE DERMATITIS</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE ERYTHEMA</td>
+<td align="left">1 (20.0)</td>
+<td align="left">1 (20.0)</td>
+<td align="left">4 (80.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE IRRITATION</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">1 (20.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE PAIN</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE PRURITUS</td>
+<td align="left">1 (20.0)</td>
+<td align="left">2 (40.0)</td>
+<td align="left">5 (100.0)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE URTICARIA</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE VESICLES</td>
+<td align="left">0</td>
+<td align="left">1 (20.0)</td>
+<td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+<tr class="even">
+<td align="left">ARTHRALGIA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">MILD</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="available-statlist-formats-for-frequency-summary" class="section level3">
+<h3>Available statlist formats for frequency summary</h3>
+<p>We have shown the common use cases of calling different variants of
+the statlist for frequency summaries. The table below describes all
+available options to be specified for the <code>statlist</code> in
+<code>freq</code>.</p>
+<table style="width:96%;">
+<colgroup>
+<col width="20%" />
+<col width="75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Statlist</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>n</td>
+<td align="center">count</td>
+</tr>
+<tr class="even">
+<td>n (x.x)</td>
+<td align="center">count (percentage without %)</td>
+</tr>
+<tr class="odd">
+<td>n (x.x%)</td>
+<td align="center">count (percentage with %)</td>
+</tr>
+<tr class="even">
+<td>n/N</td>
+<td align="center">count/denominator</td>
+</tr>
+<tr class="odd">
+<td>n/N (x.x)</td>
+<td align="center">count/denominator (percentage without %)</td>
+</tr>
+<tr class="even">
+<td>n/N (x.x%)</td>
+<td align="center">count/denominator (percentage with %)</td>
+</tr>
+</tbody>
+</table>
+<p>To learn more about using the <code>statlist</code> function for freq
+analysis, please type <code>?statlist</code> in your console.</p>
+</div>
+</div>
+<div id="nested-frequency-analysis" class="section level2">
+<h2>Nested Frequency Analysis</h2>
+<p>A major portion of Adverse Events (AE) summary tables require
+summarizing number of subjects with treatment-emergent adverse events by
+system organ class and preferred term, which is in a nested structure
+and needs additional processing on top of the <code>freq</code>
+function. Therefore, we developed the <code>nested_freq</code> function
+to address the nested structure (counts within counts):</p>
+<ul>
+<li><p><code>rowvar</code>: we can specify nested levels separated by
+<code>*</code> (e.g. <code>AEBODSYS*AEDECOD</code>); this can be
+expanded to three levels</p></li>
+<li><p><code>descending_by</code>: the name of the column for sorting in
+descending frequency order</p></li>
+<li><p><code>cutoff_stat</code>: the value to cutoff by, n (count) or
+pct (percentage); default = ‘pct’</p></li>
+<li><p><code>cutoff</code>: numeric value of the percentage/count
+threshold in any treatment group for cutting the data to be presented;
+for example, <code>cutoff = 1.0</code> means to only keep the preferred
+term rows with percentages &gt;= 1% when cutoff_stat = ‘pct’.</p></li>
+</ul>
+<p>In the example below, we will show you how to use these arguments in
+the <code>nested_freq</code> function call for creating the AE summary
+table by AEBODSYS and AEDECOD.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>adae <span class="ot">&lt;-</span> cdisc_adae <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>, TRTEMFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AEBODSYS <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS&quot;</span>,<span class="st">&quot;SKIN AND SUBCUTANEOUS TISSUE DISORDERS&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TRT01AN =</span> TRTAN)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>)</span></code></pre></div>
+<p>For illustration purpose, we subset the adae data to only contain
+records in the 2 categories of system organ class: GENERAL DISORDERS AND
+ADMINISTRATION SITE CONDITIONS, SKIN AND SUBCUTANEOUS TISSUE DISORDERS.
+So the table output is not too long and will be easier to visualize. In
+addition, we would like to sort the output by the active drug group
+(TRT01AN = 81) with descending frequency. Therefore, we specify
+<code>descending_by = &quot;81&quot;</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">denom_df =</span> adsl,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="30%" />
+<col width="5%" />
+<col width="5%" />
+<col width="6%" />
+<col width="5%" />
+<col width="7%" />
+<col width="7%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">nested_level</th>
+<th align="right">group_level</th>
+<th align="left">AEBODSYS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">System organ class<br />
+Preferred term</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">3 (60.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE PRURITUS</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE ERYTHEMA</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">4 (80.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">FATIGUE</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE IRRITATION</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE PAIN</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE VESICLES</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE DERMATITIS</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE URTICARIA</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">PYREXIA</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+<tr class="odd">
+<td align="left">ACTINIC KERATOSIS</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+<tr class="even">
+<td align="left">ERYTHEMA</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+<tr class="odd">
+<td align="left">PRURITUS</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+<tr class="even">
+<td align="left">PRURITUS GENERALISED</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+<tr class="odd">
+<td align="left">URTICARIA</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+</tbody>
+</table>
+<p>As shown in the output above, the most frequent system organ class is
+<strong>GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS</strong>,
+followed by <strong>SKIN AND SUBCUTANEOUS TISSUE DISORDERS</strong>.
+Within each system organ class, the preferred terms are also sorted by
+descending frequency. When there is a tie in the counts, the preferred
+terms are sorted alphabetically.</p>
+<p>The cutoff feature is controlled by two arguments:
+<code>cutoff</code> and <code>cutoff_stat</code>. If we want to remove
+the rows of preferred terms with only 1 count in any treatment columns,
+we can specify <code>cutoff = 2</code> and
+<code>cutoff_stat = &quot;n&quot;</code> in the nested_freq call below.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">denom_df =</span> adsl,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cutoff =</span> <span class="dv">2</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cutoff_stat =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="30%" />
+<col width="5%" />
+<col width="5%" />
+<col width="6%" />
+<col width="5%" />
+<col width="7%" />
+<col width="7%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">nested_level</th>
+<th align="right">group_level</th>
+<th align="left">AEBODSYS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">System organ class<br />
+Preferred term</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">3 (60.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE PRURITUS</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE ERYTHEMA</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">4 (80.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">FATIGUE</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+<tr class="odd">
+<td align="left">ERYTHEMA</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">0</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+</tr>
+</tbody>
+</table>
+<p>The same cutoff results can also be achieved by specifying the cutoff
+percentage: <code>cutoff = 25</code> and
+<code>cutoff_stat = &quot;pct&quot;</code>. In our example, we only have 5
+subjects in each arm and one subject count is equal to 20%, and so we
+need more than 20% as the cutoff.</p>
+<p>For only keeping the preferred terms with at least 2 counts in the
+active arm of <code>TRT01AN = 81</code> (i.e. not considering the other
+arms), we can specify <code>cutoff = &quot;81 &gt;= 2&quot; and</code>cutoff_stat
+= “n”`.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">denom_df =</span> adsl,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cutoff =</span> <span class="st">&quot;81 &gt;= 2&quot;</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cutoff_stat =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="30%" />
+<col width="5%" />
+<col width="5%" />
+<col width="6%" />
+<col width="5%" />
+<col width="7%" />
+<col width="7%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">label</th>
+<th align="left">0</th>
+<th align="left">54</th>
+<th align="left">81</th>
+<th align="left">row_type</th>
+<th align="right">nested_level</th>
+<th align="right">group_level</th>
+<th align="left">AEBODSYS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">System organ class<br />
+Preferred term</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">HEADER</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">3 (60.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">APPLICATION SITE PRURITUS</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">5 (100.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="even">
+<td align="left">APPLICATION SITE ERYTHEMA</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">4 (80.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+<tr class="odd">
+<td align="left">FATIGUE</td>
+<td align="left">0</td>
+<td align="left">1 (20.0%)</td>
+<td align="left">2 (40.0%)</td>
+<td align="left">NESTED</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">GENERAL DISORDERS AND ADMINISTRATION SITE
+CONDITIONS</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
