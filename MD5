@@ -1,6 +1,6 @@
-84501d93d1eab2f157f44ec49596ac37 *DESCRIPTION
+be38c8e5cd3aa0dbf28fa2391ebcf1b4 *DESCRIPTION
 319f9cce8c85d320641e7cb24f0b3fcb *NAMESPACE
-a25465608c6a6dc918670d69fd6ba166 *NEWS.md
+51e83ff6862de219f2063c1c061629a3 *NEWS.md
 79716216659b0a29699028a2243d388c *R/add_format.R
 e91d60603c7421183fc047704bd9fb0d *R/add_indent.R
 b8a743f1af9eda5f6378d581bfe2b061 *R/add_newrows.R
@@ -39,10 +39,10 @@ b341a986fe327754fdbaac57fb99fdc7 *inst/doc/symbols.R
 cb009ec60eb5efc971d8d9084c8eb416 *inst/doc/symbols.html
 30773459f8913a66044a25878464c888 *inst/doc/tbl_manipulation.R
 af66ea14fdadc55165b414007a60b3ed *inst/doc/tbl_manipulation.Rmd
-e62b33f8245ef3aa0f4306834c03423a *inst/doc/tbl_manipulation.html
-34f666063673e4a819cab32b42662954 *inst/doc/tidytlg.R
-9c8ad03e5dbf613f3d6862c8bbbd9577 *inst/doc/tidytlg.Rmd
-a2a4bffaf086ae1f83a637fa40357222 *inst/doc/tidytlg.html
+822ab2350c3b2cb41b733d3d22699468 *inst/doc/tbl_manipulation.html
+a2d9c706c2b9b234005e2dbe95a3a748 *inst/doc/tidytlg.R
+3cc01b925fd643b962a0b0630b774d80 *inst/doc/tidytlg.Rmd
+c4051326495bb9c5f84d0023133ba463 *inst/doc/tidytlg.html
 87920b70c3dbec0e0b31dea2ddc685e5 *inst/doc/tlgsetup.R
 e38d6253bac9af82fd9c934586651ca5 *inst/doc/tlgsetup.Rmd
 d77c007f3f5cd083a4347bd0030c67ab *inst/doc/tlgsetup.html
@@ -152,7 +152,7 @@ d832cb7ad2be23b59c8aa883ce40565e *vignettes/freq.Rmd
 7850d4cefc394cf6d9de1b4d7a006339 *vignettes/graph01.PNG
 73660b117a68843678f56e171c5a42f9 *vignettes/symbols.Rmd
 af66ea14fdadc55165b414007a60b3ed *vignettes/tbl_manipulation.Rmd
-9c8ad03e5dbf613f3d6862c8bbbd9577 *vignettes/tidytlg.Rmd
+3cc01b925fd643b962a0b0630b774d80 *vignettes/tidytlg.Rmd
 2539aac6cb836990fcadfe6c11788473 *vignettes/titles.PNG
 e38d6253bac9af82fd9c934586651ca5 *vignettes/tlgsetup.Rmd
 11e556506e8cec7670c44f83c2dc1b45 *vignettes/univar.Rmd

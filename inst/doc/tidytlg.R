@@ -5,6 +5,8 @@ knitr::opts_chunk$set(
   fig.path = "figures"
 )
 
+working_dir <- tempdir()
+
 ## ---- echo=FALSE, out.width = "600px"-----------------------------------------
 knitr::include_graphics("titles.PNG")
 
@@ -75,7 +77,7 @@ knitr::kable(tbl)
 tblid <- "Table01"
 
 gentlg(huxme       = tbl,
-       opath       = system.file("extdata", package = "tidytlg"), 
+       opath       = file.path(working_dir), 
        file        = tblid,
        orientation = "landscape",
        title_file = system.file("extdata/titles.xls", package = "tidytlg"))
@@ -161,7 +163,7 @@ plot <- ggplot(data = adsl, aes(x = HEIGHTBL, y = WEIGHTBL)) +
   facet_wrap(~SEX, nrow=1)
 
 # create png file
-png(file.path(system.file("extdata", package = "tidytlg"), paste0(tblid,".png")), width=2800, height=1300, res=300, type = "cairo")
+png(file.path(working_dir, paste0(tblid,".png")), width=2800, height=1300, res=300, type = "cairo")
 
 plot
 
@@ -174,7 +176,7 @@ gentlg(tlf = "g",
        plotwidth = 10,
        plotheight = 5,
        orientation = "landscape",
-       opath       = system.file("extdata", package = "tidytlg"), 
+       opath       = file.path(working_dir),, 
        file = tblid,
        title_file = system.file("extdata/titles.xls", package = "tidytlg"))
 
