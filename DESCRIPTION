@@ -1,6 +1,6 @@
 Package: tidytlg
 Title: Create TLGs using the 'tidyverse'
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
      c(person(given = "Nicholas",
            family = "Masel",
@@ -65,7 +65,7 @@ Depends: R (>= 3.6.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2023-05-09 15:09:55 UTC; eli.miller
+Packaged: 2023-06-23 13:01:06 UTC; eli.miller
 Author: Nicholas Masel [aut],
   Steven Haesendonckx [aut],
   Pelagia Alexandra Papadopoulou [aut],
@@ -77,4 +77,4 @@ Author: Nicholas Masel [aut],
   David Hugh-Jones [cph] (Author of included huxtable library)
 Maintainer: Eli Miller <eli.miller@atorusresearch.com>
 Repository: CRAN
-Date/Publication: 2023-05-10 00:00:02 UTC
+Date/Publication: 2023-06-23 15:00:02 UTC
