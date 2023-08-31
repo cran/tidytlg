@@ -1,3 +1,7 @@
+# tidytlg 0.1.3
+
+* Updated tidytlg-package overall documentation to resolve a CRAN issue. (#21)
+
 # tidytlg 0.1.2
 
 * Fixed bug where the use of the 'wcol' argument in `gentlg()` would error when no formatting variables were present (#14)

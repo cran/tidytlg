@@ -1,6 +1,6 @@
-b1deed355f42efb826e5aba0718d59d5 *DESCRIPTION
+cec1cb16dfa53fcfd52d0b19bcd426a8 *DESCRIPTION
 319f9cce8c85d320641e7cb24f0b3fcb *NAMESPACE
-6650be9c457352e71e576868f40976e5 *NEWS.md
+f4ce6136991ee6f6f31090dcda3dab73 *NEWS.md
 79716216659b0a29699028a2243d388c *R/add_format.R
 e91d60603c7421183fc047704bd9fb0d *R/add_indent.R
 b8a743f1af9eda5f6378d581bfe2b061 *R/add_newrows.R
@@ -18,12 +18,12 @@ f6a810e463df688d30ee412508ae7eac *R/quick_rtf_jnj.R
 df6b20e273001f8db21b826bbc1d57c7 *R/roundSAS.R
 996f76ef8f1fdf10a6732cc864c08135 *R/spanning_headers.R
 792935b250e8e6201565ba016041fc3a *R/statlist.R
-38d0ee425705e425f8575a21326f0128 *R/tidytlg.R
+5490e908087c85b996619c37086f0b0f *R/tidytlg-package.R
 7650e6a0b3cdd19b2fcb0dc4b943cec5 *R/tlgsetup.R
 7a863edb96add61ca22459c1125c7407 *R/univar.R
 6b58a2ef67d26b77e04b0c4e80a1cff0 *R/utility.R
 8e698e7f3dd2d4a82ebf99d994c77c74 *R/zzz.R
-d4a116d9a2685f07fb76dde4e3363114 *README.md
+6b4d670206373263e610e8eb985a168c *README.md
 00a21756ce27655e0c4e542e823d5dc3 *build/vignette.rds
 7a2caa1f24f9337c977f83d8f81e02ec *data/cdisc_adae.rda
 3d7f09db14f5a0c560285fae35640db3 *data/cdisc_adlb.rda
@@ -39,10 +39,10 @@ b341a986fe327754fdbaac57fb99fdc7 *inst/doc/symbols.R
 cb009ec60eb5efc971d8d9084c8eb416 *inst/doc/symbols.html
 30773459f8913a66044a25878464c888 *inst/doc/tbl_manipulation.R
 af66ea14fdadc55165b414007a60b3ed *inst/doc/tbl_manipulation.Rmd
-d3fd866bc6e567dd0ff229a90b1e88b7 *inst/doc/tbl_manipulation.html
+78cb47f000ac4f1b7ff2d6b8b04c51b8 *inst/doc/tbl_manipulation.html
 a2d9c706c2b9b234005e2dbe95a3a748 *inst/doc/tidytlg.R
 3cc01b925fd643b962a0b0630b774d80 *inst/doc/tidytlg.Rmd
-45c0e2642d906b3453e49de5954192fa *inst/doc/tidytlg.html
+065ee51343da852df06f679deac17410 *inst/doc/tidytlg.html
 87920b70c3dbec0e0b31dea2ddc685e5 *inst/doc/tlgsetup.R
 e38d6253bac9af82fd9c934586651ca5 *inst/doc/tlgsetup.Rmd
 d77c007f3f5cd083a4347bd0030c67ab *inst/doc/tlgsetup.html
@@ -77,7 +77,7 @@ e8dee278341aa970ae19c976d1d110c3 *man/replace_na_with_blank.Rd
 3d83bb4c1edb2155822bf7ab3aab867f *man/spanning_headers.Rd
 cf14120b735dc8dd8f5691a2aa314cec *man/statlist.Rd
 e00a8149d64f5a114fac52b90a9becbc *man/table_metadata.Rd
-120e424607dc8ff150f2f3f279a48754 *man/tidytlg.Rd
+2e78473d9d9ed907161b74b625220af8 *man/tidytlg.Rd
 d01b749a380eea63c03db301ce923308 *man/tlgsetup.Rd
 064e4c39533e5206d4afabd0afe2fcde *man/univar.Rd
 594a2c820301305955a1f87fdaaa14a4 *tests/testthat.R
