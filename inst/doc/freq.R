@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -7,57 +7,57 @@ library(dplyr)
 library(tidytlg)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
-  freq(colvar = "TRT01PN", 
-       rowvar = "ITTFL", 
+tbl <- cdisc_adsl %>%
+  freq(colvar = "TRT01PN",
+       rowvar = "ITTFL",
        statlist = statlist("n"),
        subset = ITTFL == "Y",
        rowtext = "Analysis set: ITT")
-  
+
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
-  freq(colvar = "TRT01PN", 
-       rowvar = "SEX", 
+tbl <- cdisc_adsl %>%
+  freq(colvar = "TRT01PN",
+       rowvar = "SEX",
        statlist = statlist(c("N","n (x.x%)")),
        row_header = "Sex")
 
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
-  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>% 
-  freq(colvar = "TRT01PN", 
-       rowvar = "SEX", 
+tbl <- cdisc_adsl %>%
+  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>%
+  freq(colvar = "TRT01PN",
+       rowvar = "SEX",
        statlist = statlist(c("N","n (x.x%)")),
        row_header = "Sex")
 
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
-  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>% 
-  freq(colvar = "TRT01PN", 
-       rowvar = "SEX", 
+tbl <- cdisc_adsl %>%
+  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>%
+  freq(colvar = "TRT01PN",
+       rowvar = "SEX",
        statlist = statlist("n/N (x.x%)"),
        row_header = "Sex")
 
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
-  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>% 
+tbl <- cdisc_adsl %>%
+  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>%
   freq(colvar = "TRT01PN",
        rowbyvar = "SEX",
-       rowvar = "AGEGR1", 
+       rowvar = "AGEGR1",
        statlist = statlist(c("N","n (x.x%)"), denoms_by = c("SEX", "TRT01PN")),
-       row_header = "Age group") 
+       row_header = "Age group")
 
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
+tbl <- cdisc_adsl %>%
   freq(colvar = "TRT01PN",
        rowbyvar = "ETHNIC",
        rowvar = "RACE",
@@ -67,7 +67,7 @@ tbl <- cdisc_adsl %>%
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
+tbl <- cdisc_adsl %>%
   freq(colvar = "TRT01PN",
        rowbyvar = "ETHNIC",
        rowvar = "RACE",
@@ -85,7 +85,7 @@ tbl <- adae %>%
   freq(denom_df = cdisc_adsl,
        colvar = "TRT01AN",
        rowvar = "AEDECOD",
-       descending_by = "81") 
+       descending_by = "81")
 
 knitr::kable(head(tbl, 10))
 
@@ -95,17 +95,17 @@ tbl <- adae %>%
        colvar = "TRT01AN",
        rowvar = "AEDECOD",
        rowbyvar = "AESEV",
-       statlist = statlist(c("n (x.x)"), denoms_by = "TRT01AN")) 
+       statlist = statlist(c("n (x.x)"), denoms_by = "TRT01AN"))
 
 knitr::kable(head(tbl, 10))
 
-## ---- message=FALSE-----------------------------------------------------------
+## ----message=FALSE------------------------------------------------------------
 adae <- cdisc_adae %>%
-  filter(SAFFL == "Y", TRTEMFL == "Y") %>% 
+  filter(SAFFL == "Y", TRTEMFL == "Y") %>%
   filter(AEBODSYS %in% c("GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS","SKIN AND SUBCUTANEOUS TISSUE DISORDERS")) %>%
   rename(TRT01AN = TRTAN)
 
-adsl <- cdisc_adsl %>% 
+adsl <- cdisc_adsl %>%
   filter(SAFFL == "Y")
 
 ## -----------------------------------------------------------------------------

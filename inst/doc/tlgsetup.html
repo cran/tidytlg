@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -341,8 +341,8 @@ Your Data Using tlgsetup</h1>
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytlg)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidytlg)</span></code></pre></div>
 <p>The tlgsetup helper function was created to support generating
 different column structures for our outputs. This allows us to specify
 column types once that can be used across multiple outputs. This
@@ -351,24 +351,24 @@ from another source like a dataframe, file or database.</p>
 <p>Here we see an example of the column metadata which defines our
 columns, how to combine columns, column labels and spanning headers
 across columns.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>column_metadata <span class="ot">&lt;-</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>tbltype, <span class="sc">~</span>coldef, <span class="sc">~</span>decode,                <span class="sc">~</span>span1,      </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;0&quot;</span>,     <span class="st">&quot;Placebo&quot;</span>,              <span class="st">&quot;&quot;</span>,       </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;54&quot;</span>,    <span class="st">&quot;Low Dose&quot;</span>,             <span class="st">&quot;Xanomeline&quot;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;81&quot;</span>,    <span class="st">&quot;High Dose&quot;</span>,            <span class="st">&quot;Xanomeline&quot;</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;54+81&quot;</span>, <span class="st">&quot;Total Xanomeline&quot;</span>,     <span class="st">&quot;&quot;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>column_metadata</span></code></pre></div>
-<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-2">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>column_metadata <span class="ot">&lt;-</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="sc">~</span>tbltype, <span class="sc">~</span>coldef, <span class="sc">~</span>decode,                <span class="sc">~</span>span1,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;0&quot;</span>,     <span class="st">&quot;Placebo&quot;</span>,              <span class="st">&quot;&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;54&quot;</span>,    <span class="st">&quot;Low Dose&quot;</span>,             <span class="st">&quot;Xanomeline&quot;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;81&quot;</span>,    <span class="st">&quot;High Dose&quot;</span>,            <span class="st">&quot;Xanomeline&quot;</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;54+81&quot;</span>, <span class="st">&quot;Total Xanomeline&quot;</span>,     <span class="st">&quot;&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  )</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>column_metadata</span></code></pre></div>
+<table class="huxtable" data-quarto-disable-processing="true" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  ">
 <col><col><col><col><tr>
 <th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">tbltype</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">coldef</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">decode</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">span1</th></tr>
 <tr>
 <td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">0</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Placebo</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;"></td></tr>
 <tr>
-<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">54</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Low Dose</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Xanomeline</td></tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">54</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Low Dose</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Xanomeline</td></tr>
 <tr>
-<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">81</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">High Dose</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Xanomeline</td></tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">81</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">High Dose</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Xanomeline</td></tr>
 <tr>
 <td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">54+81</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Total Xanomeline</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td></tr>
 </table>
@@ -386,39 +386,39 @@ Note that our column summary variable has been converted to a factor.
 This is required and allows us to define column order as well as label
 in one variable.</p>
 <p>Let’s read in adsl and check the dimensions.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;cdisc_adsl&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ITTFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRT01PN, TRT01P, ITTFL, SEX, RACE, AGE)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(adsl)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 15</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 7</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ USUBJID &lt;chr&gt; &quot;01-701-1015&quot;, &quot;01-701-1023&quot;, &quot;01-701-1047&quot;, &quot;01-701-1118&quot;, &quot;0…</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ TRT01PN &lt;dbl&gt; 0, 0, 0, 0, 0, 54, 54, 54, 54, 54, 81, 81, 81, 81, 81</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ TRT01P  &lt;chr&gt; &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Xanome…</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ ITTFL   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y…</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ SEX     &lt;chr&gt; &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F…</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ RACE    &lt;chr&gt; &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;,…</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ AGE     &lt;dbl&gt; 63, 64, 85, 52, 84, 74, 68, 81, 84, 71, 71, 77, 81, 75, 57</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;cdisc_adsl&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">filter</span>(ITTFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRT01PN, TRT01P, ITTFL, SEX, RACE, AGE)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">glimpse</span>(adsl)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; Rows: 15</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; Columns: 7</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; $ USUBJID &lt;chr&gt; &quot;01-701-1015&quot;, &quot;01-701-1023&quot;, &quot;01-701-1047&quot;, &quot;01-701-1118&quot;, &quot;0…</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; $ TRT01PN &lt;dbl&gt; 0, 0, 0, 0, 0, 54, 54, 54, 54, 54, 81, 81, 81, 81, 81</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; $ TRT01P  &lt;chr&gt; &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Xanome…</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; $ ITTFL   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y…</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; $ SEX     &lt;chr&gt; &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F…</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; $ RACE    &lt;chr&gt; &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;,…</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; $ AGE     &lt;dbl&gt; 63, 64, 85, 52, 84, 74, 68, 81, 84, 71, 71, 77, 81, 75, 57</span></span></code></pre></div>
 <pre><code>#&gt; [1] &quot;Dimensions prior to the tlgsetup call are 15 rows and 7 columns.&quot;</code></pre>
 <p>Now let’s pass the adsl data through our tlgsetup function to add
 observations to support the <code>type1</code> column structure and
 check out the dimensions.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>setup_table <span class="ot">&lt;-</span> <span class="fu">tlgsetup</span>(adsl,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">var =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">column_metadata =</span> column_metadata)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(setup_table)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 25</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 9</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ tbltype &lt;chr&gt; &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;,…</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ colnbr  &lt;fct&gt; col1, col1, col1, col1, col1, col2, col2, col2, col2, col2, co…</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ USUBJID &lt;chr&gt; &quot;01-701-1015&quot;, &quot;01-701-1023&quot;, &quot;01-701-1047&quot;, &quot;01-701-1118&quot;, &quot;0…</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ TRT01PN &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;81&quot;, &quot;…</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ TRT01P  &lt;chr&gt; &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Xanome…</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ ITTFL   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y…</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ SEX     &lt;chr&gt; &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F…</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ RACE    &lt;chr&gt; &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;,…</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ AGE     &lt;dbl&gt; 63, 64, 85, 52, 84, 74, 68, 81, 84, 71, 71, 77, 81, 75, 57, 74…</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>setup_table <span class="ot">&lt;-</span> <span class="fu">tlgsetup</span>(adsl,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                        <span class="at">var =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                        <span class="at">column_metadata =</span> column_metadata)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">glimpse</span>(setup_table)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; Rows: 25</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; Columns: 9</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; $ tbltype &lt;chr&gt; &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;,…</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; $ colnbr  &lt;fct&gt; col1, col1, col1, col1, col1, col2, col2, col2, col2, col2, co…</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; $ USUBJID &lt;chr&gt; &quot;01-701-1015&quot;, &quot;01-701-1023&quot;, &quot;01-701-1047&quot;, &quot;01-701-1118&quot;, &quot;0…</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; $ TRT01PN &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;81&quot;, &quot;…</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; $ TRT01P  &lt;chr&gt; &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Xanome…</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; $ ITTFL   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y…</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; $ SEX     &lt;chr&gt; &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F…</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; $ RACE    &lt;chr&gt; &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;,…</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; $ AGE     &lt;dbl&gt; 63, 64, 85, 52, 84, 74, 68, 81, 84, 71, 71, 77, 81, 75, 57, 74…</span></span></code></pre></div>
 <pre><code>#&gt; [1] &quot;Dimensions after to the rmtsetup call are 25 rows and 9 columns.&quot;</code></pre>
 <p>Here we see we have added two new variables, <code>colnbr</code> and
 <code>tbltype</code>, which will now be used as our treatment variable
@@ -426,17 +426,17 @@ when generating our results.</p>
 <p>If we take a look at the observation counts for <code>colnbr</code>,
 we see the 168 records added to the data support
 <code>Total Xanomeline</code> as we expected!</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>setup_table <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(colnbr) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Groups:   colnbr [4]</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   colnbr     n</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;  &lt;int&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 col1       5</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 col2       5</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 col3       5</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 col4      10</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>setup_table <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">group_by</span>(colnbr) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">count</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; # Groups:   colnbr [4]</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;   colnbr     n</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;  &lt;int&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 1 col1       5</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 2 col2       5</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 3 col3       5</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 4 col4      10</span></span></code></pre></div>
 
 
 

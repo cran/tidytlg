@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -11,8 +11,8 @@ library(tidytlg)
 ## -----------------------------------------------------------------------------
 column_metadata <-
   tibble::tribble(
-    ~tbltype, ~coldef, ~decode,                ~span1,      
-    "type1",  "0",     "Placebo",              "",       
+    ~tbltype, ~coldef, ~decode,                ~span1,
+    "type1",  "0",     "Placebo",              "",
     "type1",  "54",    "Low Dose",             "Xanomeline",
     "type1",  "81",    "High Dose",            "Xanomeline",
     "type1",  "54+81", "Total Xanomeline",     ""

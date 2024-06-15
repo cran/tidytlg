@@ -1,10 +1,10 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ---- message=FALSE-----------------------------------------------------------
+## ----message=FALSE------------------------------------------------------------
 library(dplyr)
 library(tidytlg)
 
@@ -28,9 +28,8 @@ gentlg(huxme       = tbl,
           print.hux = FALSE,
           wcol        = .30)
 
-
 ## -----------------------------------------------------------------------------
-tbl <- tbl %>% 
+tbl <- tbl %>%
   mutate(newrows = case_when(label == "Age (Years)" ~ 1,
                              TRUE ~ 0))
 
@@ -48,7 +47,7 @@ gentlg(huxme       = tbl,
           wcol        = .30)
 
 ## -----------------------------------------------------------------------------
-tbl <- tbl %>% 
+tbl <- tbl %>%
   mutate(indentme = case_when(label == "N" ~ 1,
                              TRUE ~ 0))
 
@@ -66,7 +65,7 @@ gentlg(huxme       = tbl,
           wcol        = .30)
 
 ## -----------------------------------------------------------------------------
-tbl <- tbl %>% 
+tbl <- tbl %>%
   mutate(boldme = case_when(label == "Age (Years)" ~ 1,
                              TRUE ~ 0))
 
@@ -84,23 +83,23 @@ gentlg(huxme       = tbl,
           wcol        = .30)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
-  univar(colvar = "TRT01PN", 
-         rowvar = "AGE", 
+tbl <- cdisc_adsl %>%
+  univar(colvar = "TRT01PN",
+         rowvar = "AGE",
          statlist = statlist(c("N", "MEANSD")),
          decimal = 0,
-         row_header = "Age (Years)") %>% 
-  mutate(anbr = "01") 
+         row_header = "Age (Years)") %>%
+  mutate(anbr = "01")
 
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>% 
-  univar(colvar = "TRT01PN", 
-         rowvar = "AGE", 
+tbl <- cdisc_adsl %>%
+  univar(colvar = "TRT01PN",
+         rowvar = "AGE",
          statlist = statlist(c("N", "MEANSD")),
          decimal = 0,
-         row_header = "Age (Years)") %>% 
+         row_header = "Age (Years)") %>%
   mutate(anbr = "01") %>%
   add_format()
 

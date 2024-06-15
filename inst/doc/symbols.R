@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -10,24 +10,24 @@ library(huxtable)
 opath <- "."
 
 df <- tibble::tribble(
-  ~Symbol, ~`Textual Description`,  ~Unicode,  
-  "\u2190", "Left arrow", "\\u2190", 
-  "\u2192", "Right arrow", "\\u2192", 
-  "\u2264", "Less-than or equal to", "\\u2264", 
-  "\u2265", "Greater-than or equal to", "\\u2265", 
-  "\u2260", "Not equal to", "\\u2260", 
-  "\u00b1", "Plus-minus sign", "\\u00b1", 
-  "\u03b1", "Alpha", "\\u03b1", 
-  "\u03b2", "Beta", "\\u03b2", 
-  "\u03bc", "Mu", "\\u03bc", 
+  ~Symbol, ~`Textual Description`,  ~Unicode,
+  "\u2190", "Left arrow", "\\u2190",
+  "\u2192", "Right arrow", "\\u2192",
+  "\u2264", "Less-than or equal to", "\\u2264",
+  "\u2265", "Greater-than or equal to", "\\u2265",
+  "\u2260", "Not equal to", "\\u2260",
+  "\u00b1", "Plus-minus sign", "\\u00b1",
+  "\u03b1", "Alpha", "\\u03b1",
+  "\u03b2", "Beta", "\\u03b2",
+  "\u03bc", "Mu", "\\u03bc",
   "\u00ab", "Non-breaking space", "\\u00ab"
 )
 df
 
 # quick_rtf(hux(df),
 #           file = "./test.rtf")
-# 
-# 
+#
+#
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  
