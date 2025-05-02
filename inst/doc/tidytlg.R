@@ -80,7 +80,7 @@ gentlg(huxme       = tbl,
        opath       = file.path(working_dir),
        file        = tblid,
        orientation = "landscape",
-       title_file = system.file("extdata/titles.xls", package = "tidytlg"))
+       title_file = system.file("extdata/titles.xls", package = "tidytlg"))[[1]]
 
 ## -----------------------------------------------------------------------------
 gentlg(huxme       = tbl,
@@ -88,7 +88,7 @@ gentlg(huxme       = tbl,
        print.hux = FALSE,
        file        = tblid,
        orientation = "landscape",
-       title_file = system.file("extdata/titles.xls", package = "tidytlg"))
+       title_file = system.file("extdata/titles.xls", package = "tidytlg"))[[1]]
 
 ## -----------------------------------------------------------------------------
 # Prep Environment ---------------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ gentlg(huxme       = tbl,
                        "Body System [Preferred Term]",
                        "Verbatim Term",
                        "Serious",
-                       "Fatal"))
+                       "Fatal"))[[1]]
 
 ## -----------------------------------------------------------------------------
 # Prep Environment ---------------------------------------------------------------------------------------
@@ -219,7 +219,7 @@ gentlg(huxme       = tbl,
        print.hux = FALSE,
        file        = tblid,
        orientation = "landscape",
-       title_file = system.file("extdata/titles.xls", package = "tidytlg"))
+       title_file = system.file("extdata/titles.xls", package = "tidytlg"))[[1]]
 
 ## ----message=FALSE------------------------------------------------------------
 library(dplyr)
@@ -256,5 +256,5 @@ gentlg(huxme       = tbl,
        print.hux = FALSE,
        file        = tblid,
        orientation = "landscape",
-       title_file = system.file("extdata/titles.xls", package = "tidytlg"))
+       title_file = system.file("extdata/titles.xls", package = "tidytlg"))[[1]]
 

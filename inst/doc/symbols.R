@@ -30,62 +30,62 @@ df
 #
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  
-#  df <- tibble::tibble(
-#    label = c("\u2264", "\u2265"),
-#    col1 = c("100", "200")
-#  )
-#  
-#  tidytlg::gentlg(df,
-#                  file = "demo")
-#  
+# 
+# df <- tibble::tibble(
+#   label = c("\u2264", "\u2265"),
+#   col1 = c("100", "200")
+# )
+# 
+# tidytlg::gentlg(df,
+#                 file = "demo")
+# 
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  
-#  df <- tibble::tibble(
-#    label = c("This is a superscript a{\\super a}",
-#              "This is a subscript b{\\sub b}"),
-#    col1 = c("100", "200")
-#  )
-#  
-#  tidytlg::gentlg(df,
-#                  file = "demo")
-#  
+# 
+# df <- tibble::tibble(
+#   label = c("This is a superscript a{\\super a}",
+#             "This is a subscript b{\\sub b}"),
+#   col1 = c("100", "200")
+# )
+# 
+# tidytlg::gentlg(df,
+#                 file = "demo")
+# 
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  
-#  df <- tibble::tibble(
-#    label = c("This is a superscript a{\\super a}",
-#              "This is a subscript b{\\sub b}"),
-#    col1 = c("100", "200")
-#  )
-#  
-#  tidytlg::gentlg(df,
-#                  file = "demo",
-#                  footers = "This is a footnote superscript{\\super a}")
-#  
+# 
+# df <- tibble::tibble(
+#   label = c("This is a superscript a{\\super a}",
+#             "This is a subscript b{\\sub b}"),
+#   col1 = c("100", "200")
+# )
+# 
+# tidytlg::gentlg(df,
+#                 file = "demo",
+#                 footers = "This is a footnote superscript{\\super a}")
+# 
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  
-#  df <- tibble::tibble(
-#    label = c("Bodysystem \\\n Preferred Term"),
-#    col1 = c("100")
-#  )
-#  
-#  tidytlg::gentlg(df,
-#                  file = "demo")
-#  
-#  
+# 
+# df <- tibble::tibble(
+#   label = c("Bodysystem \\\n Preferred Term"),
+#   col1 = c("100")
+# )
+# 
+# tidytlg::gentlg(df,
+#                 file = "demo")
+# 
+# 
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  
-#  df <- tibble::tibble(
-#    label = c("Bodysystem\\\n\\li180Preferred Term"),
-#    col1 = c("100")
-#  )
-#  
-#  tidytlg::gentlg(df,
-#                  file = "demo")
-#  
-#  
+# 
+# df <- tibble::tibble(
+#   label = c("Bodysystem\\\n\\li180Preferred Term"),
+#   col1 = c("100")
+# )
+# 
+# tidytlg::gentlg(df,
+#                 file = "demo")
+# 
+# 
 

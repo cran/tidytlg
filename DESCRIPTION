@@ -1,6 +1,6 @@
 Package: tidytlg
 Title: Create TLGs using the 'tidyverse'
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: 
      c(person(given = "Nicholas",
            family = "Masel",
@@ -70,17 +70,17 @@ Depends: R (>= 3.6.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2024-06-14 16:46:58 UTC; kpagacz
+Packaged: 2025-05-02 11:58:37 UTC; fei
 Author: Nicholas Masel [aut],
   Steven Haesendonckx [aut],
   Pelagia Alexandra Papadopoulou [aut],
   Sheng-Wei Wang [aut],
-  Eli Miller [aut] (<https://orcid.org/0000-0002-2127-9456>),
-  Nathan Kosiba [aut] (<https://orcid.org/0000-0001-5359-4234>),
-  Aidan Ceney [aut] (<https://orcid.org/0000-0001-8313-487X>),
+  Eli Miller [aut] (ORCID: <https://orcid.org/0000-0002-2127-9456>),
+  Nathan Kosiba [aut] (ORCID: <https://orcid.org/0000-0001-5359-4234>),
+  Aidan Ceney [aut] (ORCID: <https://orcid.org/0000-0001-8313-487X>),
   Janssen R&D [cph, fnd],
   David Hugh-Jones [cph] (Author of included huxtable library),
   Konrad Pagacz [aut, cre]
 Maintainer: Konrad Pagacz <kpagacz@its.jnj.com>
 Repository: CRAN
-Date/Publication: 2024-06-15 00:30:02 UTC
+Date/Publication: 2025-05-02 12:20:02 UTC
