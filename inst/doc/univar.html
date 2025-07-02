@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -348,13 +348,15 @@ summary statistics for numeric variables. A typical example of using the
 shown below for summarizing N, MEAN (SD), MEDIAN, RANGE, IQ Range for
 the <code>Age</code> variable in adsl.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>         <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEANSD&quot;</span>, <span class="st">&quot;MEDIAN&quot;</span>, <span class="st">&quot;RANGE&quot;</span>, <span class="st">&quot;IQRANGE&quot;</span>)),</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">0</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEANSD&quot;</span>, <span class="st">&quot;MEDIAN&quot;</span>, <span class="st">&quot;RANGE&quot;</span>, <span class="st">&quot;IQRANGE&quot;</span>)),</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="at">decimal =</span> <span class="dv">0</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  )</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="16%" />
@@ -534,13 +536,15 @@ for passing to the <code>statlist</code> argument.</p>
 C.I.), and Geometric Mean (95% C.I.) for the <code>Age</code> variable
 in adsl.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>         <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEAN_CI&quot;</span>, <span class="st">&quot;GeoMEAN_CI&quot;</span>)),</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">0</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;MEAN_CI&quot;</span>, <span class="st">&quot;GeoMEAN_CI&quot;</span>)),</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="at">decimal =</span> <span class="dv">0</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  )</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="24%" />
@@ -614,12 +618,14 @@ extra defaults, please type
 example function call of <code>univar</code> is shown below for
 presenting the data using a base decimal value of 2.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;BMIBL&quot;</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">2</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>         <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;BMIBL&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">decimal =</span> <span class="dv">2</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Age (Years)&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  )</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="14%" />
@@ -711,13 +717,15 @@ addition, we would like the precision to be data driven and varied by
 parameter, which can be achieved by setting
 <code>precisionby = &quot;PARAMCD&quot;</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>         <span class="at">rowbyvar =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>         <span class="at">precisionby =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">4</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="at">precisionby =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="at">decimal =</span> <span class="dv">4</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  )</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="8%" />
@@ -1076,12 +1084,14 @@ CHG to calculate precision, similar to the above example we still use
 <code>decimal = 4</code> to cap our decimal spaces at 4.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;CHG&quot;</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>         <span class="at">precisionon =</span> <span class="st">&quot;CHG&quot;</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">4</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;CHG&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="at">precisionon =</span> <span class="st">&quot;CHG&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    <span class="at">decimal =</span> <span class="dv">4</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  )</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="14%" />
@@ -1156,14 +1166,16 @@ precision. We also calculate precision by PARAMCD since the output table
 will be presented using that as a by variable.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">univar</span>(<span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>         <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>         <span class="at">rowbyvar =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>         <span class="at">precisionby =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>         <span class="at">precisionon =</span> <span class="st">&quot;CHG&quot;</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>         <span class="at">decimal =</span> <span class="dv">4</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="at">precisionby =</span> <span class="st">&quot;PARAMCD&quot;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="at">precisionon =</span> <span class="st">&quot;CHG&quot;</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="at">decimal =</span> <span class="dv">4</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  )</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="9%" />

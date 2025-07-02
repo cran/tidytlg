@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -377,63 +377,67 @@ reference to commonly used symbols.</p>
 
 <p>Here is an example call to tidytlg::gentlg() that will add the
 symbols to the label column.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;\u2264&quot;</span>, <span class="st">&quot;\u2265&quot;</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;200&quot;</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>)</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>                <span class="at">file =</span> <span class="st">&quot;demo&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;\u2264&quot;</span>, <span class="st">&quot;\u2265&quot;</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;200&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;demo&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="superscripts-and-subscripts" class="section level1">
 <h1>Superscripts and Subscripts</h1>
 <p>Superscripts and Subscripts can be added to the label column via
 unicode.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;This is a superscript a{</span><span class="sc">\\</span><span class="st">super a}&quot;</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>            <span class="st">&quot;This is a subscript b{</span><span class="sc">\\</span><span class="st">sub b}&quot;</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;200&quot;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>)</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>                <span class="at">file =</span> <span class="st">&quot;demo&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="st">&quot;This is a superscript a{</span><span class="sc">\\</span><span class="st">super a}&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="st">&quot;This is a subscript b{</span><span class="sc">\\</span><span class="st">sub b}&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  ),</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;200&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;demo&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>)</span></code></pre></div>
 <p>Superscripts and Subscripts can be added to the footnotes via unicode
 as well.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;This is a superscript a{</span><span class="sc">\\</span><span class="st">super a}&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>            <span class="st">&quot;This is a subscript b{</span><span class="sc">\\</span><span class="st">sub b}&quot;</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;200&quot;</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>)</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>                <span class="at">file =</span> <span class="st">&quot;demo&quot;</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>                <span class="at">footers =</span> <span class="st">&quot;This is a footnote superscript{</span><span class="sc">\\</span><span class="st">super a}&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="st">&quot;This is a superscript a{</span><span class="sc">\\</span><span class="st">super a}&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="st">&quot;This is a subscript b{</span><span class="sc">\\</span><span class="st">sub b}&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  ),</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;200&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;demo&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="at">footers =</span> <span class="st">&quot;This is a footnote superscript{</span><span class="sc">\\</span><span class="st">super a}&quot;</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="inline-rtf-line-breaks" class="section level1">
 <h1>Inline RTF Line Breaks</h1>
 <p>Sometimes you need add a line break into your RTF. Inserting ‘\\\n’
 into your string will add your line break for you.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Bodysystem </span><span class="sc">\\\n</span><span class="st"> Preferred Term&quot;</span>),</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                <span class="at">file =</span> <span class="st">&quot;demo&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Bodysystem </span><span class="sc">\\\n</span><span class="st"> Preferred Term&quot;</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;demo&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>)</span></code></pre></div>
 <p>If you need a line break followed by a tab, just add in
 ‘\\li180’.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Bodysystem</span><span class="sc">\\\n\\</span><span class="st">li180Preferred Term&quot;</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>                <span class="at">file =</span> <span class="st">&quot;demo&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Bodysystem</span><span class="sc">\\\n\\</span><span class="st">li180Preferred Term&quot;</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">col1 =</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>tidytlg<span class="sc">::</span><span class="fu">gentlg</span>(df,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;demo&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 
 

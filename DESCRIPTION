@@ -1,6 +1,6 @@
 Package: tidytlg
 Title: Create TLGs using the 'tidyverse'
-Version: 0.1.6
+Version: 0.10.0
 Authors@R: 
      c(person(given = "Nicholas",
            family = "Masel",
@@ -55,7 +55,7 @@ URL: https://pharmaverse.github.io/tidytlg/main/,
 BugReports: https://github.com/pharmaverse/tidytlg/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Suggests: testthat (>= 2.1.0), knitr (>= 1.23), rmarkdown (>= 2.10),
         renv (>= 0.13.2), shiny (>= 1.3.2), kableExtra (>= 1.3.4),
         haven (>= 2.4.1), usethis (>= 1.6.3), withr (>= 2.3.0)
@@ -70,7 +70,7 @@ Depends: R (>= 3.6.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2025-05-02 11:58:37 UTC; fei
+Packaged: 2025-07-02 15:43:21 UTC; kpagacz
 Author: Nicholas Masel [aut],
   Steven Haesendonckx [aut],
   Pelagia Alexandra Papadopoulou [aut],
@@ -83,4 +83,4 @@ Author: Nicholas Masel [aut],
   Konrad Pagacz [aut, cre]
 Maintainer: Konrad Pagacz <kpagacz@its.jnj.com>
 Repository: CRAN
-Date/Publication: 2025-05-02 12:20:02 UTC
+Date/Publication: 2025-07-02 16:00:02 UTC

@@ -39,27 +39,22 @@ roundSAS <- function(x,
                      digits = 0,
                      as_char = FALSE,
                      na_char = NULL) {
-
   # perform SAS rounding ----------------------------------------------------
   posneg <- sign(x)
   z <- abs(x) * 10^digits
   z <- z + 0.5 + sqrt(.Machine$double.eps)
   z <- trunc(z)
-  z <- z / 10^digits
-  z <- z * posneg
+  z <- (z / 10^digits)
+  z <- ifelse(!is.na(z) & z > 0, z * posneg, z)
 
   # output rounded values ---------------------------------------------------
   if (as_char & is.null(na_char)) {
-
     ## convert rounded values to character vector
     formatC(z, format = "f", digits = digits)
-
   } else if (as_char & !is.null(na_char)) {
-
     ## convert to character vector and use na_char for missing value
     formatC(z, format = "f", digits = digits) %>%
       str_replace(" *(NA|NaN|NULL)", na_char)
-
   } else {
     ## return numeric vector of rounded values
     z

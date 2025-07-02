@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -354,13 +354,15 @@ in the output. In the following table the <code>subset</code> argument
 is used to create the one row summary with the row heading specified in
 the <code>rowtext</code> argument.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;ITTFL&quot;</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n&quot;</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>       <span class="at">subset =</span> ITTFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>       <span class="at">rowtext =</span> <span class="st">&quot;Analysis set: ITT&quot;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;ITTFL&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n&quot;</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="at">subset =</span> ITTFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="at">rowtext =</span> <span class="st">&quot;Analysis set: ITT&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  )</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -397,12 +399,14 @@ character variable such as age groups, gender, race, ethnicity,
 etc.</p></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  )</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -459,12 +463,14 @@ We can convert <code>SEX</code> to a factor variable with the customized
 order and labels for enabling the user-defined sorting.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  )</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -520,12 +526,14 @@ denominator, which can be done by specifying
 <code>statlist = statlist(&quot;n/N (x.x%)&quot;)</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n/N (x.x%)&quot;</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n/N (x.x%)&quot;</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  )</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -576,13 +584,15 @@ addition to <code>TRT01PN</code>, which can be done by
 <code>statlist(c(&quot;N&quot;,&quot;n (x.x%)&quot;), denoms_by = c(&quot;SEX&quot;, &quot;TRT01PN&quot;))</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;AGEGR1&quot;</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>), <span class="at">denoms_by =</span> <span class="fu">c</span>(<span class="st">&quot;SEX&quot;</span>, <span class="st">&quot;TRT01PN&quot;</span>)),</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Age group&quot;</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AGEGR1&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>), <span class="at">denoms_by =</span> <span class="fu">c</span>(<span class="st">&quot;SEX&quot;</span>, <span class="st">&quot;TRT01PN&quot;</span>)),</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Age group&quot;</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  )</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="14%" />
@@ -633,15 +643,6 @@ addition to <code>TRT01PN</code>, which can be done by
 <td align="left">Male</td>
 </tr>
 <tr class="even">
-<td align="left">65-80</td>
-<td align="left">0</td>
-<td align="left">3 (75.0%)</td>
-<td align="left">1 (50.0%)</td>
-<td align="left">VALUE</td>
-<td align="right">0</td>
-<td align="left">Male</td>
-</tr>
-<tr class="odd">
 <td align="left">&lt;65</td>
 <td align="left">2 (66.7%)</td>
 <td align="left">0</td>
@@ -650,11 +651,20 @@ addition to <code>TRT01PN</code>, which can be done by
 <td align="right">0</td>
 <td align="left">Male</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">&gt;80</td>
 <td align="left">1 (33.3%)</td>
 <td align="left">1 (25.0%)</td>
 <td align="left">0</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Male</td>
+</tr>
+<tr class="even">
+<td align="left">65-80</td>
+<td align="left">0</td>
+<td align="left">3 (75.0%)</td>
+<td align="left">1 (50.0%)</td>
 <td align="left">VALUE</td>
 <td align="right">0</td>
 <td align="left">Male</td>
@@ -687,15 +697,6 @@ addition to <code>TRT01PN</code>, which can be done by
 <td align="left">Female</td>
 </tr>
 <tr class="even">
-<td align="left">65-80</td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">2 (66.7%)</td>
-<td align="left">VALUE</td>
-<td align="right">0</td>
-<td align="left">Female</td>
-</tr>
-<tr class="odd">
 <td align="left">&lt;65</td>
 <td align="left">1 (50.0%)</td>
 <td align="left">0</td>
@@ -704,11 +705,20 @@ addition to <code>TRT01PN</code>, which can be done by
 <td align="right">0</td>
 <td align="left">Female</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">&gt;80</td>
 <td align="left">1 (50.0%)</td>
 <td align="left">1 (100.0%)</td>
 <td align="left">1 (33.3%)</td>
+<td align="left">VALUE</td>
+<td align="right">0</td>
+<td align="left">Female</td>
+</tr>
+<tr class="even">
+<td align="left">65-80</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">2 (66.7%)</td>
 <td align="left">VALUE</td>
 <td align="right">0</td>
 <td align="left">Female</td>
@@ -727,13 +737,15 @@ the <code>statlist</code> function.</p>
 some levels of the <code>rowvar</code> may have zero records as shown in
 the example below.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;ETHNIC&quot;</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;RACE&quot;</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Race&quot;</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;ETHNIC&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;RACE&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Race&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  )</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table style="width:100%;">
 <colgroup>
 <col width="22%" />
@@ -834,14 +846,16 @@ the example below.</p>
 users can specify the <code>pad = FALSE</code> in the <code>freq</code>
 function.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;ETHNIC&quot;</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;RACE&quot;</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;n (x.x%)&quot;</span>)),</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>       <span class="at">row_header =</span> <span class="st">&quot;Race&quot;</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>       <span class="at">pad =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;ETHNIC&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;RACE&quot;</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Race&quot;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    <span class="at">pad =</span> <span class="cn">FALSE</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  )</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table style="width:100%;">
 <colgroup>
 <col width="22%" />
@@ -950,12 +964,14 @@ counting AEDECOD but using ADSL to calculate the denominators.</p>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TRT01AN =</span> TRTAN)</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> adae <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">denom_df =</span> cdisc_adsl,</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>       <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;AEDECOD&quot;</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>       <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tbl, <span class="dv">10</span>))</span></code></pre></div>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="at">denom_df =</span> cdisc_adsl,</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AEDECOD&quot;</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>    <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  )</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tbl, <span class="dv">10</span>))</span></code></pre></div>
 <table>
 <colgroup>
 <col width="36%" />
@@ -1077,13 +1093,15 @@ by we use the <code>denoms_by</code> argument to the
 <code>statlist</code> function. Below you can see that we are using only
 our <code>colvar</code> of TRT01PN as our <code>denoms_by</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> adae <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">freq</span>(<span class="at">denom_df =</span> cdisc_adsl,</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>       <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>       <span class="at">rowvar =</span> <span class="st">&quot;AEDECOD&quot;</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>       <span class="at">rowbyvar =</span> <span class="st">&quot;AESEV&quot;</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>       <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;n (x.x)&quot;</span>), <span class="at">denoms_by =</span> <span class="st">&quot;TRT01AN&quot;</span>))</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tbl, <span class="dv">10</span>))</span></code></pre></div>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">denom_df =</span> cdisc_adsl,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AEDECOD&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;AESEV&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;n (x.x)&quot;</span>), <span class="at">denoms_by =</span> <span class="st">&quot;TRT01AN&quot;</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  )</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tbl, <span class="dv">10</span>))</span></code></pre></div>
 <table>
 <colgroup>
 <col width="32%" />
@@ -1273,7 +1291,7 @@ the <code>nested_freq</code> function call for creating the AE summary
 table by AEBODSYS and AEDECOD.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>adae <span class="ot">&lt;-</span> cdisc_adae <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>, TRTEMFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">filter</span>(AEBODSYS <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS&quot;</span>,<span class="st">&quot;SKIN AND SUBCUTANEOUS TISSUE DISORDERS&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">filter</span>(AEBODSYS <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS&quot;</span>, <span class="st">&quot;SKIN AND SUBCUTANEOUS TISSUE DISORDERS&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TRT01AN =</span> TRTAN)</span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
@@ -1286,14 +1304,15 @@ addition, we would like to sort the output by the active drug group
 (TRT01AN = 81) with descending frequency. Therefore, we specify
 <code>descending_by = &quot;81&quot;</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>                   <span class="at">denom_df =</span> adsl,</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                   <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>                   <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>                   <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>                   <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>                   <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">denom_df =</span> adsl,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table style="width:100%;">
 <colgroup>
 <col width="30%" />
@@ -1515,16 +1534,17 @@ the rows of preferred terms with only 1 count in any treatment columns,
 we can specify <code>cutoff = 2</code> and
 <code>cutoff_stat = &quot;n&quot;</code> in the nested_freq call below.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>                   <span class="at">denom_df =</span> adsl,</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>                   <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>                   <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>                   <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>                   <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>                   <span class="at">cutoff =</span> <span class="dv">2</span>,</span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>                   <span class="at">cutoff_stat =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>                   <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="at">denom_df =</span> adsl,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  <span class="at">cutoff =</span> <span class="dv">2</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>  <span class="at">cutoff_stat =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>  <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>)</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table style="width:100%;">
 <colgroup>
 <col width="30%" />
@@ -1638,16 +1658,17 @@ active arm of <code>TRT01AN = 81</code> (i.e. not considering the other
 arms), we can specify <code>cutoff = &quot;81 &gt;= 2&quot; and</code>cutoff_stat
 = “n”`.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>                   <span class="at">denom_df =</span> adsl,</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>                   <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>                   <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>                   <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>                   <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>                   <span class="at">cutoff =</span> <span class="st">&quot;81 &gt;= 2&quot;</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>                   <span class="at">cutoff_stat =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>                   <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="at">denom_df =</span> adsl,</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="at">rowvar =</span> <span class="st">&quot;AEBODSYS*AEDECOD&quot;</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n (x.x%)&quot;</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  <span class="at">descending_by =</span> <span class="st">&quot;81&quot;</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>  <span class="at">cutoff =</span> <span class="st">&quot;81 &gt;= 2&quot;</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  <span class="at">cutoff_stat =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>  <span class="at">row_header =</span> <span class="st">&quot;System organ class </span><span class="sc">\\\n</span><span class="st"> Preferred term&quot;</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>)</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table style="width:100%;">
 <colgroup>
 <col width="30%" />

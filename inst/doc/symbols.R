@@ -10,7 +10,7 @@ library(huxtable)
 opath <- "."
 
 df <- tibble::tribble(
-  ~Symbol, ~`Textual Description`,  ~Unicode,
+  ~Symbol, ~`Textual Description`, ~Unicode,
   "\u2190", "Left arrow", "\\u2190",
   "\u2192", "Right arrow", "\\u2192",
   "\u2264", "Less-than or equal to", "\\u2264",
@@ -30,62 +30,59 @@ df
 #
 
 ## ----eval = FALSE-------------------------------------------------------------
-# 
 # df <- tibble::tibble(
 #   label = c("\u2264", "\u2265"),
 #   col1 = c("100", "200")
 # )
 # 
 # tidytlg::gentlg(df,
-#                 file = "demo")
-# 
+#   file = "demo"
+# )
 
 ## ----eval = FALSE-------------------------------------------------------------
-# 
 # df <- tibble::tibble(
-#   label = c("This is a superscript a{\\super a}",
-#             "This is a subscript b{\\sub b}"),
+#   label = c(
+#     "This is a superscript a{\\super a}",
+#     "This is a subscript b{\\sub b}"
+#   ),
 #   col1 = c("100", "200")
 # )
 # 
 # tidytlg::gentlg(df,
-#                 file = "demo")
-# 
+#   file = "demo"
+# )
 
 ## ----eval = FALSE-------------------------------------------------------------
-# 
 # df <- tibble::tibble(
-#   label = c("This is a superscript a{\\super a}",
-#             "This is a subscript b{\\sub b}"),
+#   label = c(
+#     "This is a superscript a{\\super a}",
+#     "This is a subscript b{\\sub b}"
+#   ),
 #   col1 = c("100", "200")
 # )
 # 
 # tidytlg::gentlg(df,
-#                 file = "demo",
-#                 footers = "This is a footnote superscript{\\super a}")
-# 
+#   file = "demo",
+#   footers = "This is a footnote superscript{\\super a}"
+# )
 
 ## ----eval = FALSE-------------------------------------------------------------
-# 
 # df <- tibble::tibble(
 #   label = c("Bodysystem \\\n Preferred Term"),
 #   col1 = c("100")
 # )
 # 
 # tidytlg::gentlg(df,
-#                 file = "demo")
-# 
-# 
+#   file = "demo"
+# )
 
 ## ----eval = FALSE-------------------------------------------------------------
-# 
 # df <- tibble::tibble(
 #   label = c("Bodysystem\\\n\\li180Preferred Term"),
 #   col1 = c("100")
 # )
 # 
 # tidytlg::gentlg(df,
-#                 file = "demo")
-# 
-# 
+#   file = "demo"
+# )
 

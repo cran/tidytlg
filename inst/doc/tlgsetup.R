@@ -27,16 +27,17 @@ adsl <- cdisc_adsl %>%
 glimpse(adsl)
 
 ## ----echo = FALSE-------------------------------------------------------------
-paste0("Dimensions prior to the tlgsetup call are ", dim(adsl)[1] , " rows and ", dim(adsl)[2], " columns.")
+paste0("Dimensions prior to the tlgsetup call are ", dim(adsl)[1], " rows and ", dim(adsl)[2], " columns.")
 
 ## ----warning=FALSE------------------------------------------------------------
 setup_table <- tlgsetup(adsl,
-                        var = "TRT01PN",
-                        column_metadata = column_metadata)
+  var = "TRT01PN",
+  column_metadata = column_metadata
+)
 glimpse(setup_table)
 
 ## ----echo = FALSE-------------------------------------------------------------
-paste0("Dimensions after to the rmtsetup call are ", dim(setup_table)[1] , " rows and ", dim(setup_table)[2], " columns.")
+paste0("Dimensions after to the rmtsetup call are ", dim(setup_table)[1], " rows and ", dim(setup_table)[2], " columns.")
 
 ## -----------------------------------------------------------------------------
 setup_table %>%

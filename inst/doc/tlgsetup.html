@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -405,20 +405,21 @@ in one variable.</p>
 observations to support the <code>type1</code> column structure and
 check out the dimensions.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>setup_table <span class="ot">&lt;-</span> <span class="fu">tlgsetup</span>(adsl,</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                        <span class="at">var =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                        <span class="at">column_metadata =</span> column_metadata)</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">glimpse</span>(setup_table)</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; Rows: 25</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; Columns: 9</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; $ tbltype &lt;chr&gt; &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;,…</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; $ colnbr  &lt;fct&gt; col1, col1, col1, col1, col1, col2, col2, col2, col2, col2, co…</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; $ USUBJID &lt;chr&gt; &quot;01-701-1015&quot;, &quot;01-701-1023&quot;, &quot;01-701-1047&quot;, &quot;01-701-1118&quot;, &quot;0…</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; $ TRT01PN &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;81&quot;, &quot;…</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; $ TRT01P  &lt;chr&gt; &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Xanome…</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; $ ITTFL   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y…</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; $ SEX     &lt;chr&gt; &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F…</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; $ RACE    &lt;chr&gt; &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;,…</span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; $ AGE     &lt;dbl&gt; 63, 64, 85, 52, 84, 74, 68, 81, 84, 71, 71, 77, 81, 75, 57, 74…</span></span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">var =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">column_metadata =</span> column_metadata</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">glimpse</span>(setup_table)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; Rows: 25</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; Columns: 9</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; $ tbltype &lt;chr&gt; &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;, &quot;type1&quot;,…</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; $ colnbr  &lt;fct&gt; col1, col1, col1, col1, col1, col2, col2, col2, col2, col2, co…</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; $ USUBJID &lt;chr&gt; &quot;01-701-1015&quot;, &quot;01-701-1023&quot;, &quot;01-701-1047&quot;, &quot;01-701-1118&quot;, &quot;0…</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; $ TRT01PN &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;54&quot;, &quot;81&quot;, &quot;…</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; $ TRT01P  &lt;chr&gt; &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Placebo&quot;, &quot;Xanome…</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; $ ITTFL   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y…</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; $ SEX     &lt;chr&gt; &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F…</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; $ RACE    &lt;chr&gt; &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;,…</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; $ AGE     &lt;dbl&gt; 63, 64, 85, 52, 84, 74, 68, 81, 84, 71, 71, 77, 81, 75, 57, 74…</span></span></code></pre></div>
 <pre><code>#&gt; [1] &quot;Dimensions after to the rmtsetup call are 25 rows and 9 columns.&quot;</code></pre>
 <p>Here we see we have added two new variables, <code>colnbr</code> and
 <code>tbltype</code>, which will now be used as our treatment variable
