@@ -17,28 +17,36 @@ knitr::include_graphics("column_metadata.PNG")
 knitr::include_graphics("column_header.PNG")
 
 ## ----message=FALSE------------------------------------------------------------
-# Prep Environment -------------------------------------------------------------------------------------
+# Prep Environment -------------------------------------------------------------
 library(dplyr)
 library(haven)
 library(tidytlg)
 
 # read adsl from PhUSE test data factory
-testdata <- "https://github.com/phuse-org/TestDataFactory/raw/main/Updated/TDF_ADaM/"
-adsl <- read_xpt(url(paste0(testdata, "adsl.xpt")))
+testdata <- "https://github.com/phuse-org/TestDataFactory/raw/refs/heads/main/Updated/TDF_ADaM/adsl.xpt"
+adsl <- read_xpt(url(testdata))
 
 ## ----message=FALSE------------------------------------------------------------
-# Process Data -----------------------------------------------------------------------------------------
+# Process Data -----------------------------------------------------------------
 adsl <- adsl %>%
   filter(ITTFL == "Y") %>%
-  mutate(SEX = factor(SEX, levels = c("M", "F", "U"), labels = c("Male", "Female", "Unknown"))) %>%
+  mutate(
+    SEX = factor(
+      SEX,
+      levels = c("M", "F", "U"), labels = c("Male", "Female", "Unknown")
+    )
+  ) %>%
   tlgsetup(
     var = "TRT01PN",
-    column_metadata_file = system.file("extdata/column_metadata.xlsx", package = "tidytlg"),
+    column_metadata_file = system.file(
+      "extdata/column_metadata.xlsx",
+      package = "tidytlg"
+    ),
     tbltype = "type3"
   )
 
 ## ----message=FALSE------------------------------------------------------------
-# Generate Results -------------------------------------------------------------------------------------
+# Generate Results -------------------------------------------------------------
 
 ## Analysis set row
 t1 <- adsl %>%
@@ -70,10 +78,13 @@ t3 <- adsl %>%
   )
 
 ## -----------------------------------------------------------------------------
-# Format Results ---------------------------------------------------------------------------------------
+# Format Results ---------------------------------------------------------------
 
 tbl <- bind_table(t1, t2, t3,
-  column_metadata_file = system.file("extdata/column_metadata.xlsx", package = "tidytlg"),
+  column_metadata_file = system.file(
+    "extdata/column_metadata.xlsx",
+    package = "tidytlg"
+  ),
   tbltype = "type3"
 )
 
@@ -102,7 +113,7 @@ gentlg(
 )[[1]]
 
 ## -----------------------------------------------------------------------------
-# Prep Environment ---------------------------------------------------------------------------------------
+# Prep Environment -------------------------------------------------------------
 library(dplyr)
 library(haven)
 library(tidytlg)
@@ -110,7 +121,7 @@ library(tidytlg)
 adsl <- cdisc_adsl
 adae <- cdisc_adae
 
-# Process Data --------------------------------------------------------------------------------------------
+# Process Data -----------------------------------------------------------------
 adsl <- adsl %>%
   filter(SAFFL == "Y") %>%
   select(USUBJID, SAFFL, TRT01AN, TRT01A)
@@ -129,7 +140,7 @@ tbl <- inner_join(adsl, adae, by = "USUBJID") %>%
   select(TRT01A, USUBJID, ASTDY, TRTA, BSPT, AETERM, SAEFL, DTHFL) %>%
   filter(USUBJID %in% c("01-701-1015", "01-701-1023"))
 
-# Output Results ------------------------------------------------------------------------------------------
+# Output Results ---------------------------------------------------------------
 gentlg(
   huxme = tbl,
   tlf = "l",
@@ -153,25 +164,25 @@ gentlg(
 )[[1]]
 
 ## -----------------------------------------------------------------------------
-# Prep Environment ---------------------------------------------------------------------------------------
+# Prep Environment -------------------------------------------------------------
 library(dplyr)
 library(haven)
 library(ggplot2)
 library(tidytlg)
 
 # read adsl from PhUSE test data factory
-testdata <- "https://github.com/phuse-org/TestDataFactory/raw/main/Updated/TDF_ADaM/"
-adsl <- read_xpt(url(paste0(testdata, "adsl.xpt")))
+testdata <- "https://github.com/phuse-org/TestDataFactory/raw/refs/heads/main/Updated/TDF_ADaM/adsl.xpt"
+adsl <- read_xpt(url(testdata))
 
 tblid <- "Graph01"
 
-# Process Data --------------------------------------------------------------------------------------------
+# Process Data -------------------------------------------------------
 adsl <- adsl %>%
   filter(ITTFL == "Y") %>%
   select(USUBJID, ITTFL, TRT01PN, TRT01P, AGE, SEX, HEIGHTBL, WEIGHTBL) %>%
   mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female")))
 
-# Generate Results ----------------------------------------------------------------------------------------
+# Generate Results -------------------------------------------------------------
 
 plot <- ggplot(data = adsl, aes(x = HEIGHTBL, y = WEIGHTBL)) +
   geom_point() +
@@ -182,17 +193,22 @@ plot <- ggplot(data = adsl, aes(x = HEIGHTBL, y = WEIGHTBL)) +
   facet_wrap(~SEX, nrow = 1)
 
 # create png file
-png(file.path(working_dir, paste0(tblid, ".png")), width = 2800, height = 1300, res = 300, type = "cairo")
+png(
+  file.path(working_dir, paste0(tblid, ".png")),
+  width = 2800, height = 1300, res = 300, type = "cairo"
+)
 
 plot
 
 dev.off()
 
-# Output Results ------------------------------------------------------------------------------------------
+# Output Results ---------------------------------------------------------------
 
 gentlg(
   tlf = "g",
-  plotnames = file.path(system.file("extdata", package = "tidytlg"), paste0(tblid, ".png")),
+  plotnames = file.path(
+    system.file("extdata", package = "tidytlg"), paste0(tblid, ".png")
+  ),
   plotwidth = 10,
   plotheight = 5,
   orientation = "landscape",
@@ -210,18 +226,24 @@ library(haven)
 library(tidytlg)
 
 # read adsl from PhUSE test data factory
-testdata <- "https://github.com/phuse-org/TestDataFactory/raw/main/Updated/TDF_ADaM/"
-adsl <- read_xpt(url(paste0(testdata, "adsl.xpt")))
+testdata <- "https://github.com/phuse-org/TestDataFactory/raw/refs/heads/main/Updated/TDF_ADaM/adsl.xpt"
+adsl <- read_xpt(url(testdata))
 
 # Process data
 adsl <- adsl %>%
   filter(ITTFL == "Y") %>%
-  mutate(SEX = factor(SEX, levels = c("M", "F", "U"), labels = c("Male", "Female", "Unknown")))
+  mutate(
+    SEX = factor(
+      SEX,
+      levels = c("M", "F", "U"), labels = c("Male", "Female", "Unknown")
+    )
+  )
 
 # define table metadata
 table_metadata <- tibble::tribble(
   ~func, ~df, ~rowvar, ~decimal, ~rowtext, ~row_header, ~statlist, ~subset,
-  "freq", "adsl", "ITTFL", NA, "Analysis set: ITT", NA, statlist("n"), "ITTFL == 'Y'",
+  "freq",
+  "adsl", "ITTFL", NA, "Analysis set: ITT", NA, statlist("n"), "ITTFL == 'Y'",
   "univar", "adsl", "AGE", 0, NA, "Age (Years)", NA, NA,
   "freq", "adsl", "SEX", NA, NA, "Gender", statlist(c("N", "n (x.x%)")), NA
 ) %>%
@@ -229,7 +251,10 @@ table_metadata <- tibble::tribble(
 
 # Generate results
 tbl <- generate_results(table_metadata,
-  column_metadata_file = system.file("extdata/column_metadata.xlsx", package = "tidytlg"),
+  column_metadata_file = system.file(
+    "extdata/column_metadata.xlsx",
+    package = "tidytlg"
+  ),
   tbltype = "type3"
 )
 
@@ -251,8 +276,8 @@ library(haven)
 library(tidytlg)
 
 # read adsl from PhUSE test data factory
-testdata <- "https://github.com/phuse-org/TestDataFactory/raw/main/Updated/TDF_ADaM/"
-adsl <- read_xpt(url(paste0(testdata, "adsl.xpt")))
+testdata <- "https://github.com/phuse-org/TestDataFactory/raw/refs/heads/main/Updated/TDF_ADaM/adsl.xpt"
+adsl <- read_xpt(url(testdata))
 
 # Process data
 adsl <- adsl %>%
@@ -261,15 +286,20 @@ adsl <- adsl %>%
 
 # define table metadata
 table_metadata <- tibble::tribble(
-  ~func, ~df, ~rowvar, ~decimal, ~rowtext, ~row_header, ~statlist, ~subset, ~tablebyvar,
+  ~func, ~df, ~rowvar, ~decimal, ~rowtext,
+  ~row_header, ~statlist, ~subset, ~tablebyvar,
   "univar", "adsl", "AGE", 0, NA, "Age (Years)", NA, NA, "SEX",
-  "freq", "adsl", "RACE", NA, NA, "Race", statlist(c("N", "n (x.x%)")), NA, "SEX"
+  "freq", "adsl", "RACE", NA, NA,
+  "Race", statlist(c("N", "n (x.x%)")), NA, "SEX"
 ) %>%
   mutate(colvar = "TRT01PN")
 
 # Generate results
 tbl <- generate_results(table_metadata,
-  column_metadata_file = system.file("extdata/column_metadata.xlsx", package = "tidytlg"),
+  column_metadata_file = system.file(
+    "extdata/column_metadata.xlsx",
+    package = "tidytlg"
+  ),
   tbltype = "type3"
 )
 

@@ -37,7 +37,9 @@ setup_table <- tlgsetup(adsl,
 glimpse(setup_table)
 
 ## ----echo = FALSE-------------------------------------------------------------
-paste0("Dimensions after to the rmtsetup call are ", dim(setup_table)[1], " rows and ", dim(setup_table)[2], " columns.")
+paste0(
+  "Dimensions after to the rmtsetup call are ", dim(setup_table)[1], " rows and ", dim(setup_table)[2], " columns."
+)
 
 ## -----------------------------------------------------------------------------
 setup_table %>%

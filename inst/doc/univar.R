@@ -7,7 +7,7 @@ library(dplyr)
 library(tidytlg)
 
 ## ----message=FALSE------------------------------------------------------------
-tbl <- cdisc_adsl %>%
+tbl <- cdisc_adsl |>
   univar(
     colvar = "TRT01PN",
     rowvar = "AGE",
@@ -19,7 +19,7 @@ tbl <- cdisc_adsl %>%
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>%
+tbl <- cdisc_adsl |>
   univar(
     colvar = "TRT01PN",
     rowvar = "AGE",
@@ -31,7 +31,7 @@ tbl <- cdisc_adsl %>%
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_adsl %>%
+tbl <- cdisc_adsl |>
   univar(
     colvar = "TRT01PN",
     rowvar = "BMIBL",
@@ -42,7 +42,7 @@ tbl <- cdisc_adsl %>%
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_advs %>%
+tbl <- cdisc_advs |>
   univar(
     colvar = "TRTAN",
     rowvar = "AVAL",
@@ -54,8 +54,8 @@ tbl <- cdisc_advs %>%
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_advs %>%
-  filter(PARAMCD == "SYSBP") %>%
+tbl <- cdisc_advs |>
+  filter(PARAMCD == "SYSBP") |>
   univar(
     colvar = "TRTAN",
     rowvar = "CHG",
@@ -66,8 +66,8 @@ tbl <- cdisc_advs %>%
 knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
-tbl <- cdisc_advs %>%
-  filter(PARAMCD == "SYSBP") %>%
+tbl <- cdisc_advs |>
+  filter(PARAMCD == "SYSBP") |>
   univar(
     colvar = "TRTAN",
     rowvar = "AVAL",

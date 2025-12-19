@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -345,9 +346,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The <code>univar</code> function is called to produce univariate-type
 summary statistics for numeric variables. A typical example of using the
 <code>univar</code> function is to create a <code>tbl</code> chunk as
-shown below for summarizing N, MEAN (SD), MEDIAN, RANGE, IQ Range for
-the <code>Age</code> variable in adsl.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
+shown below for summarizing <code>N</code>, <code>MEAN (SD)</code>,
+<code>MEDIAN</code>, <code>RANGE</code>, <code>IQ Range</code> for the
+<code>Age</code> variable in <code>ADSL</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>,</span>
@@ -437,105 +439,105 @@ for passing to the <code>statlist</code> argument.</p>
 <table>
 <thead>
 <tr class="header">
-<th>Statlist</th>
+<th><code>Statlist</code></th>
 <th align="center">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>N</td>
+<td><code>N</code></td>
 <td align="center">number of non-missing values</td>
 </tr>
 <tr class="even">
-<td>SUM</td>
+<td><code>SUM</code></td>
 <td align="center">sum</td>
 </tr>
 <tr class="odd">
-<td>MEAN</td>
+<td><code>MEAN</code></td>
 <td align="center">mean</td>
 </tr>
 <tr class="even">
-<td>GeoMEAN</td>
+<td><code>GeoMEAN</code></td>
 <td align="center">geometric mean</td>
 </tr>
 <tr class="odd">
-<td>SD</td>
+<td><code>SD</code></td>
 <td align="center">standard deviation</td>
 </tr>
 <tr class="even">
-<td>SE</td>
+<td><code>SE</code></td>
 <td align="center">standard error</td>
 </tr>
 <tr class="odd">
-<td>CV</td>
+<td><code>CV</code></td>
 <td align="center">coefficient of variation</td>
 </tr>
 <tr class="even">
-<td>GSD</td>
+<td><code>GSD</code></td>
 <td align="center">geometric standard deviation</td>
 </tr>
 <tr class="odd">
-<td>GSE</td>
+<td><code>GSE</code></td>
 <td align="center">geometric standard error</td>
 </tr>
 <tr class="even">
-<td>MEANSD</td>
+<td><code>MEANSD</code></td>
 <td align="center">mean (standard deviation)</td>
 </tr>
 <tr class="odd">
-<td>MEANSE</td>
+<td><code>MEANSE</code></td>
 <td align="center">mean (standard error)</td>
 </tr>
 <tr class="even">
-<td>MEDIAN</td>
+<td><code>MEDIAN</code></td>
 <td align="center">median</td>
 </tr>
 <tr class="odd">
-<td>MIN</td>
+<td><code>MIN</code></td>
 <td align="center">minimum</td>
 </tr>
 <tr class="even">
-<td>MAX</td>
+<td><code>MAX</code></td>
 <td align="center">maximum</td>
 </tr>
 <tr class="odd">
-<td>RANGE</td>
+<td><code>RANGE</code></td>
 <td align="center">range</td>
 </tr>
 <tr class="even">
-<td>Q1</td>
-<td align="center">1st quartile</td>
+<td><code>Q1</code></td>
+<td align="center">first quartile</td>
 </tr>
 <tr class="odd">
-<td>Q3</td>
-<td align="center">3rd quartile</td>
+<td><code>Q3</code></td>
+<td align="center">third quartile</td>
 </tr>
 <tr class="even">
-<td>IQRANGE</td>
+<td><code>IQRANGE</code></td>
 <td align="center">inter-quartile range</td>
 </tr>
 <tr class="odd">
-<td>MEDRANGE</td>
+<td><code>MEDRANGE</code></td>
 <td align="center">median (range)</td>
 </tr>
 <tr class="even">
-<td>MEDIQRANGE</td>
+<td><code>MEDIQRANGE</code></td>
 <td align="center">median (inter-quartile range)</td>
 </tr>
 <tr class="odd">
-<td>MEAN_CI</td>
+<td><code>MEAN_CI</code></td>
 <td align="center">mean (95% C.I.)</td>
 </tr>
 <tr class="even">
-<td>GeoMEAN_CI</td>
+<td><code>GeoMEAN_CI</code></td>
 <td align="center">geometric mean (95% C.I.)</td>
 </tr>
 </tbody>
 </table>
-<p>A customized example is shown below for displaying N, Mean (95%
-C.I.), and Geometric Mean (95% C.I.) for the <code>Age</code> variable
-in adsl.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
+<p>A customized example is shown below for displaying <code>N</code>,
+<code>Mean (95% C.I.)</code>, and <code>Geometric Mean (95% C.I.)</code>
+for the <code>Age</code> variable in <code>ADSL</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AGE&quot;</span>,</span>
@@ -612,12 +614,12 @@ precision extra is the amount precision will need to be adjusted from
 the base precision for each different statistic. The default of the
 precision extra is set by following our table and listing conventions:
 Range has a precision extra of 0, Mean and Median have a precision extra
-of 1, SD has a precision extra of 2. To see a full list of precision
-extra defaults, please type
+of 1, <code>SD</code> has a precision extra of 2. To see a full list of
+precision extra defaults, please type
 <code>options(&quot;tidytlg.precision.extra&quot;)</code> in your console. An
 example function call of <code>univar</code> is shown below for
 presenting the data using a base decimal value of 2.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;BMIBL&quot;</span>,</span>
@@ -704,19 +706,19 @@ is also available. This is controlled using the
 <code>precisionby</code>, <code>precisionon</code>, and
 <code>decimal</code> arguments. <code>precisionby</code> tells the
 function the variable(s) the user would like to compute the precision
-using. This could be variables such as PARAMCD if the precision is to be
-varied between parameter. <code>precisionon</code> is the variable that
-should be used when calculating how many base decimal places are present
-in the data. The last piece to data drive precision is the
-<code>decimal</code> argument which gives us a cap for base precision
-values. This can be used to help avoid unnecessarily long decimals in
-your final output.</p>
+using. This could be variables such as <code>PARAMCD</code> if the
+precision is to be varied between parameter. <code>precisionon</code> is
+the variable that should be used when calculating how many base decimal
+places are present in the data. The last piece to data drive precision
+is the <code>decimal</code> argument which gives us a cap for base
+precision values. This can be used to help avoid unnecessarily long
+decimals in your final output.</p>
 <p>A customized example is shown below for presenting the univariate
-summary of vital signs data using PARAMCD as the by variable. In
-addition, we would like the precision to be data driven and varied by
-parameter, which can be achieved by setting
+summary of vital signs data using <code>PARAMCD</code> as the by
+variable. In addition, we would like the precision to be data driven and
+varied by parameter, which can be achieved by setting
 <code>precisionby = &quot;PARAMCD&quot;</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>,</span>
@@ -1082,8 +1084,8 @@ multiple parts of the table are using a similar call but need to have
 different data driven precision. The following example uses the variable
 CHG to calculate precision, similar to the above example we still use
 <code>decimal = 4</code> to cap our decimal spaces at 4.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;CHG&quot;</span>,</span>
@@ -1159,13 +1161,14 @@ if you need to calculate the summary on one variable but use another for
 precision for table output formatting. The following example uses both
 <code>precisionby</code> and <code>precisionon</code> to show how they
 can be used together to make special tables. For this table, we are
-creating an element of the table that summarizes AVAL but uses CHG to
-calculate precision. This allows us to have consistent formatting
-throughout the table even though the two variables may have different
-precision. We also calculate precision by PARAMCD since the output table
-will be presented using that as a by variable.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">%&gt;%</span></span>
+creating an element of the table that summarizes <code>AVAL</code> but
+uses <code>CHG</code> to calculate precision. This allows us to have
+consistent formatting throughout the table even though the two variables
+may have different precision. We also calculate precision by
+<code>PARAMCD</code> since the output table will be presented using that
+as a by variable.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_advs <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span> <span class="st">&quot;SYSBP&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRTAN&quot;</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AVAL&quot;</span>,</span>

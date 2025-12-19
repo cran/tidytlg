@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -343,11 +344,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>The <code>freq</code> and <code>nested_freq</code> functions are
-called to produce categorical-type summary statistics (i.e. counts and
+called to produce categorical-type summary statistics (i.e. counts and
 percentages) for character variables. These functions can be used to
 create all different types of categorical summary statistics tables.</p>
 <div id="counts-statlist-statlistn" class="section level3">
-<h3>Counts: statlist = statlist(“n”)</h3>
+<h3>Counts: <code>statlist = statlist(&quot;n&quot;)</code></h3>
 <p>There are many uses for <code>freq</code>, the first one we’ll show
 is to create the first row of analysis set summary of population counts
 in the output. In the following table the <code>subset</code> argument
@@ -387,16 +388,15 @@ the <code>rowtext</code> argument.</p>
 </table>
 </div>
 <div id="big-n-row-counts-and-percentages-statlist-statlistcn-n-x.x" class="section level3">
-<h3>Big N row, counts and percentages: statlist = statlist(c(“N”, “n
-(x.x%)”))</h3>
+<h3>Big N row, counts and percentages:
+<code>statlist = statlist(c(&quot;N&quot;, &quot;n (x.x%)&quot;))</code></h3>
 <p>A typical call of using the <code>freq</code> function is to create
 the <code>tbl</code> chunk with:</p>
 <ul>
-<li><p>the row of big N indicating number of subjects having values in
-the character variable for each treatment group</p></li>
-<li><p>summary of counts and percentages for each category in the
-character variable such as age groups, gender, race, ethnicity,
-etc.</p></li>
+<li>the row of big N indicating number of subjects having values in the
+character variable for each treatment group</li>
+<li>summary of counts and percentages for each category in the character
+variable such as age groups, gender, race, ethnicity, etc.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
@@ -462,15 +462,17 @@ variable and alphabetical sorting is applied to the summarized results.
 We can convert <code>SEX</code> to a factor variable with the customized
 order and labels for enabling the user-defined sorting.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>)),</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  )</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>)),</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  )</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -519,21 +521,24 @@ order and labels for enabling the user-defined sorting.</p>
 </table>
 </div>
 <div id="counts-denominators-and-percentages-statlist-statlistcnn-x.x" class="section level3">
-<h3>Counts, denominators, and percentages: statlist = statlist(c(“n/N
-(x.x%)”))</h3>
+<h3>Counts, denominators, and percentages:
+<code>statlist = statlist(c(&quot;n/N (x.x%)&quot;))</code></h3>
 <p>In some outputs, the table mock-up may require showing the percentage
 denominator, which can be done by specifying
 <code>statlist = statlist(&quot;n/N (x.x%)&quot;)</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n/N (x.x%)&quot;</span>),</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  )</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    SEX,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="st">&quot;n/N (x.x%)&quot;</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Sex&quot;</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  )</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -574,7 +579,8 @@ denominator, which can be done by specifying
 </table>
 </div>
 <div id="by-processing-statlist-statlistcn-n-x.x" class="section level3">
-<h3>By processing: statlist = statlist(c(“N”, “n (x.x%)”))</h3>
+<h3>By processing:
+<code>statlist = statlist(c(&quot;N&quot;, &quot;n (x.x%)&quot;))</code></h3>
 <p>By-processing splits the summary statistics by another character
 variable that can be specified in the argument of <code>rowbyvar</code>
 or <code>tablebyvar</code>. For the example shown below, age group
@@ -583,16 +589,19 @@ scenario, the denominator should also be split by <code>SEX</code> in
 addition to <code>TRT01PN</code>, which can be done by
 <code>statlist(c(&quot;N&quot;,&quot;n (x.x%)&quot;), denoms_by = c(&quot;SEX&quot;, &quot;TRT01PN&quot;))</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AGEGR1&quot;</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>), <span class="at">denoms_by =</span> <span class="fu">c</span>(<span class="st">&quot;SEX&quot;</span>, <span class="st">&quot;TRT01PN&quot;</span>)),</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Age group&quot;</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  )</span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">factor</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    SEX,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>    <span class="at">rowbyvar =</span> <span class="st">&quot;SEX&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    <span class="at">rowvar =</span> <span class="st">&quot;AGEGR1&quot;</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>    <span class="at">statlist =</span> <span class="fu">statlist</span>(<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;n (x.x%)&quot;</span>), <span class="at">denoms_by =</span> <span class="fu">c</span>(<span class="st">&quot;SEX&quot;</span>, <span class="st">&quot;TRT01PN&quot;</span>)),</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    <span class="at">row_header =</span> <span class="st">&quot;Age group&quot;</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>  )</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="14%" />
@@ -957,9 +966,11 @@ function.</p>
 <h3>Denominator Dataframe</h3>
 <p>When using frequency analysis you do not need to always use your main
 dataframe to calculate your denominators. For example, an adverse event
-table may use ADSL as the denominator dataframe instead of ADAE even
-though the counts are coming from ADAE. The example below shows a table
-counting AEDECOD but using ADSL to calculate the denominators.</p>
+table may use <code>ADSL</code> as the denominator dataframe instead of
+<code>ADAE</code> even though the counts are coming from
+<code>ADAE.</code> The example below shows a table counting
+<code>AEDECOD</code> but using <code>ADSL</code> to calculate the
+denominators.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>adae <span class="ot">&lt;-</span> cdisc_adae <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TRT01AN =</span> TRTAN)</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
@@ -1076,8 +1087,8 @@ counting AEDECOD but using ADSL to calculate the denominators.</p>
 </table>
 </div>
 <div id="by-processing-and-denominators-statlist-statlistcn-x.x-denoms_by-trt01an" class="section level3">
-<h3>By processing and denominators: statlist = statlist(c(“n (x.x)”),
-denoms_by = “TRT01AN”)</h3>
+<h3>By processing and denominators:
+<code>statlist = statlist(c(&quot;n (x.x)&quot;), denoms_by = &quot;TRT01AN&quot;)</code></h3>
 <p>When using by variables such as <code>tablebyvar</code> and
 <code>rowbyvar</code> the denominators may need to be changed to work
 correctly. This also works in conjunction with the <code>denom_df</code>
@@ -1085,13 +1096,14 @@ argument. By default, the denominators are calculated by using
 <code>colvar</code>, <code>tablebyvar</code>, and <code>rowbyvar</code>.
 This works well if you are using the same dataframe for counts and
 denominators but this is not always the case. In the following example
-we are doing a similar table as above but using AESEV as a
-<code>rowbyvar</code>. In this example we don’t want our denoms by AESEV
-since that variable is not in ADSL, which is where our denominators are
-coming from. To change the variables by which our denoms are calculated
-by we use the <code>denoms_by</code> argument to the
-<code>statlist</code> function. Below you can see that we are using only
-our <code>colvar</code> of TRT01PN as our <code>denoms_by</code>.</p>
+we are doing a similar table as above but using <code>AESEV</code> as a
+<code>rowbyvar</code>. In this example we don’t want our denominators by
+<code>AESEV</code> since that variable is not in <code>ADSL</code>,
+which is where our denominators are coming from. To change the variables
+by which our denominators are calculated by we use the
+<code>denoms_by</code> argument to the <code>statlist</code> function.
+Below you can see that we are using only our <code>colvar</code> of
+<code>TRT01PN</code> as our <code>denoms_by</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> adae <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">freq</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">denom_df =</span> cdisc_adsl,</span>
@@ -1218,46 +1230,36 @@ our <code>colvar</code> of TRT01PN as our <code>denoms_by</code>.</p>
 </table>
 </div>
 <div id="available-statlist-formats-for-frequency-summary" class="section level3">
-<h3>Available statlist formats for frequency summary</h3>
+<h3>Available <code>statlist</code> formats for frequency summary</h3>
 <p>We have shown the common use cases of calling different variants of
-the statlist for frequency summaries. The table below describes all
-available options to be specified for the <code>statlist</code> in
-<code>freq</code>.</p>
-<table style="width:96%;">
+the <code>statlist</code> for frequency summaries. The table below
+describes all available options to be specified for the
+<code>statlist</code> in <code>freq</code>.</p>
+<table style="width:99%;">
 <colgroup>
-<col width="20%" />
-<col width="75%" />
+<col width="98%" />
 </colgroup>
-<thead>
-<tr class="header">
-<th>Statlist</th>
-<th align="center">Description</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td>n</td>
-<td align="center">count</td>
+<td><code>Statlist</code> | Description
+==============+:===================================================:+
+<code>n</code> | count</td>
 </tr>
 <tr class="even">
-<td>n (x.x)</td>
-<td align="center">count (percentage without %)</td>
+<td><code>n (x.x)</code> | count (percentage without %)</td>
 </tr>
 <tr class="odd">
-<td>n (x.x%)</td>
-<td align="center">count (percentage with %)</td>
+<td><code>n (x.x%)</code> | count (percentage with %)</td>
 </tr>
 <tr class="even">
-<td>n/N</td>
-<td align="center">count/denominator</td>
+<td><code>n/N</code> | count/denominator</td>
 </tr>
 <tr class="odd">
-<td>n/N (x.x)</td>
-<td align="center">count/denominator (percentage without %)</td>
+<td><code>n/N (x.x)</code> | count/denominator (percentage without
+%)</td>
 </tr>
 <tr class="even">
-<td>n/N (x.x%)</td>
-<td align="center">count/denominator (percentage with %)</td>
+<td><code>n/N (x.x%)</code> | count/denominator (percentage with %)</td>
 </tr>
 </tbody>
 </table>
@@ -1267,42 +1269,49 @@ analysis, please type <code>?statlist</code> in your console.</p>
 </div>
 <div id="nested-frequency-analysis" class="section level2">
 <h2>Nested Frequency Analysis</h2>
-<p>A major portion of Adverse Events (AE) summary tables require
-summarizing number of subjects with treatment-emergent adverse events by
-system organ class and preferred term, which is in a nested structure
-and needs additional processing on top of the <code>freq</code>
-function. Therefore, we developed the <code>nested_freq</code> function
-to address the nested structure (counts within counts):</p>
+<p>A major portion of Adverse Events (<code>AE</code>) summary tables
+require summarizing number of subjects with treatment-emergent adverse
+events by system organ class and preferred term, which is in a nested
+structure and needs additional processing on top of the
+<code>freq</code> function. Therefore, we developed the
+<code>nested_freq</code> function to address the nested structure
+(counts within counts):</p>
 <ul>
-<li><p><code>rowvar</code>: we can specify nested levels separated by
+<li><code>rowvar</code>: we can specify nested levels separated by
 <code>*</code> (e.g. <code>AEBODSYS*AEDECOD</code>); this can be
-expanded to three levels</p></li>
-<li><p><code>descending_by</code>: the name of the column for sorting in
-descending frequency order</p></li>
-<li><p><code>cutoff_stat</code>: the value to cutoff by, n (count) or
-pct (percentage); default = ‘pct’</p></li>
-<li><p><code>cutoff</code>: numeric value of the percentage/count
-threshold in any treatment group for cutting the data to be presented;
-for example, <code>cutoff = 1.0</code> means to only keep the preferred
-term rows with percentages &gt;= 1% when cutoff_stat = ‘pct’.</p></li>
+expanded to three levels.</li>
+<li><code>descending_by</code>: the name of the column for sorting in
+descending frequency order.</li>
+<li><code>cutoff_stat</code>: the value to cutoff by, <code>n</code>
+(count) or <code>pct</code> (percentage); default =
+<code>pct</code>.</li>
+<li><code>cutoff</code>: numeric value of the percentage/count threshold
+in any treatment group for cutting the data to be presented; for
+example, <code>cutoff = 1.0</code> means to only keep the preferred term
+rows with percentages <code>&gt;= 1%</code> when
+<code>cutoff_stat = &#39;pct&#39;</code>.</li>
 </ul>
 <p>In the example below, we will show you how to use these arguments in
-the <code>nested_freq</code> function call for creating the AE summary
-table by AEBODSYS and AEDECOD.</p>
+the <code>nested_freq</code> function call for creating the
+<code>AE</code> summary table by <code>AEBODSYS</code> and
+<code>AEDECOD</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>adae <span class="ot">&lt;-</span> cdisc_adae <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>, TRTEMFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">filter</span>(AEBODSYS <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS&quot;</span>, <span class="st">&quot;SKIN AND SUBCUTANEOUS TISSUE DISORDERS&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TRT01AN =</span> TRTAN)</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>)</span></code></pre></div>
-<p>For illustration purpose, we subset the adae data to only contain
-records in the 2 categories of system organ class: GENERAL DISORDERS AND
-ADMINISTRATION SITE CONDITIONS, SKIN AND SUBCUTANEOUS TISSUE DISORDERS.
-So the table output is not too long and will be easier to visualize. In
-addition, we would like to sort the output by the active drug group
-(TRT01AN = 81) with descending frequency. Therefore, we specify
-<code>descending_by = &quot;81&quot;</code>.</p>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">filter</span>(AEBODSYS <span class="sc">%in%</span> <span class="fu">c</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="st">&quot;GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="st">&quot;SKIN AND SUBCUTANEOUS TISSUE DISORDERS&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TRT01AN =</span> TRTAN)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  <span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>)</span></code></pre></div>
+<p>For illustration purpose, we subset the <code>adae</code> data to
+only contain records in the 2 categories of system organ class: GENERAL
+DISORDERS AND ADMINISTRATION SITE CONDITIONS, SKIN AND SUBCUTANEOUS
+TISSUE DISORDERS. So the table output is not too long and will be easier
+to visualize. In addition, we would like to sort the output by the
+active drug group <code>(TRT01AN = 81)</code> with descending frequency.
+Therefore, we specify <code>descending_by = &quot;81&quot;</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">denom_df =</span> adsl,</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
@@ -1530,9 +1539,10 @@ descending frequency. When there is a tie in the counts, the preferred
 terms are sorted alphabetically.</p>
 <p>The cutoff feature is controlled by two arguments:
 <code>cutoff</code> and <code>cutoff_stat</code>. If we want to remove
-the rows of preferred terms with only 1 count in any treatment columns,
-we can specify <code>cutoff = 2</code> and
-<code>cutoff_stat = &quot;n&quot;</code> in the nested_freq call below.</p>
+the rows of preferred terms with only one count in any treatment
+columns, we can specify <code>cutoff = 2</code> and
+<code>cutoff_stat = &quot;n&quot;</code> in the <code>nested_freq</code> call
+below.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="at">denom_df =</span> adsl,</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>
@@ -1655,8 +1665,8 @@ subjects in each arm and one subject count is equal to 20%, and so we
 need more than 20% as the cutoff.</p>
 <p>For only keeping the preferred terms with at least 2 counts in the
 active arm of <code>TRT01AN = 81</code> (i.e. not considering the other
-arms), we can specify <code>cutoff = &quot;81 &gt;= 2&quot; and</code>cutoff_stat
-= “n”`.</p>
+arms), we can specify <code>cutoff = &quot;81 &gt;= 2&quot;</code> and
+<code>cutoff_stat = &quot;n&quot;</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">nested_freq</span>(adae,</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="at">denom_df =</span> adsl,</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="at">colvar =</span> <span class="st">&quot;TRT01AN&quot;</span>,</span>

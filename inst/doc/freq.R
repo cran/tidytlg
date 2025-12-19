@@ -31,7 +31,9 @@ knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
 tbl <- cdisc_adsl %>%
-  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>%
+  mutate(
+    SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))
+  ) %>%
   freq(
     colvar = "TRT01PN",
     rowvar = "SEX",
@@ -43,7 +45,10 @@ knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
 tbl <- cdisc_adsl %>%
-  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>%
+  mutate(SEX = factor(
+    SEX,
+    levels = c("M", "F"), labels = c("Male", "Female")
+  )) %>%
   freq(
     colvar = "TRT01PN",
     rowvar = "SEX",
@@ -55,7 +60,10 @@ knitr::kable(tbl)
 
 ## -----------------------------------------------------------------------------
 tbl <- cdisc_adsl %>%
-  mutate(SEX = factor(SEX, levels = c("M", "F"), labels = c("Male", "Female"))) %>%
+  mutate(SEX = factor(
+    SEX,
+    levels = c("M", "F"), labels = c("Male", "Female")
+  )) %>%
   freq(
     colvar = "TRT01PN",
     rowbyvar = "SEX",
@@ -120,7 +128,10 @@ knitr::kable(head(tbl, 10))
 ## ----message=FALSE------------------------------------------------------------
 adae <- cdisc_adae %>%
   filter(SAFFL == "Y", TRTEMFL == "Y") %>%
-  filter(AEBODSYS %in% c("GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS", "SKIN AND SUBCUTANEOUS TISSUE DISORDERS")) %>%
+  filter(AEBODSYS %in% c(
+    "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+    "SKIN AND SUBCUTANEOUS TISSUE DISORDERS"
+  )) %>%
   rename(TRT01AN = TRTAN)
 
 adsl <- cdisc_adsl %>%

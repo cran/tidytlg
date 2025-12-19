@@ -1,91 +1,94 @@
-#' tidytlg: A package for producing tables, listings, and graphs (TLGs) using
-#' tidyverse packages.
+#' `tidytlg`: A package for producing tables, listings,
+#'  and graphs (`TLGs`) using `tidyverse` packages.
 #'
-#' The tidytlg package provide a set of function allowing you to produce TLGs
+#' The `tidytlg` package provide a set of function allowing you to produce TLGs
 #' using table metadata.
 #'
+#' @section `tidytlg` Options:
 #'
-#' @section tidytlg Options:
-#'
-#' \itemize{ \item{tidytlg.row_type.levels - The values of row_type and their
+#' \itemize{ \item{`tidytlg.row_type.levels` - The values of row_type and their
 #' respective levels. Default: c("TABLE_BY_HEADER", "BY_HEADER1", "BY_HEADER2",
 #' "BY_HEADER3", "BY_HEADER4", "BY_HEADER5", "HEADER", "N", "VALUE", "NESTED")}
-#' \item{tidytlg.fontsize.title - Font size for titles in points. Default: 10}
-#' \item{tidytlg.fontsize.table.footnote - Font size for footnotes in points.
-#' For tables. Default: 9} \item{tidytlg.fontsize.listing.footnote - Font size
+#' \item{`tidytlg.fontsize.title` - Font size for titles in points. Default: 10}
+#' \item{`tidytlg.fontsize.table.footnote` - Font size for footnotes in points.
+#' For tables. Default: 9} \item{`tidytlg.fontsize.listing.footnote` - Font size
 #' for footnotes in points. For listings. Default: 8}
-#' \item{tidytlg.fontsize.graph.footnote - Font size for footnotes in points.
-#' For graphs. Default: 8} \item{tidytlg.fontsize.table - Font size for tables
-#' in points. Default: 9} \item{tidytlg.fontsize.graph - Font size for graphs in
-#' points. Default: 10} \item{tidytlg.fontsize.listing - Font size for listings
-#' in poins. Default: 8} \item{tidytlg.right.padding - Amount of right padding
-#' for cells in points. Default: 1} \item{tidytlg.left.padding - Amount of left
-#' padding for cells in points. Default: 1} \item{tidytlg.stat_labels - Labels
+#' \item{`tidytlg.fontsize.graph.footnote` - Font size for footnotes in points.
+#' For graphs. Default: 8} \item{`tidytlg.fontsize.table` - Font size for tables
+#' in points. Default: 9} \item{`tidytlg.fontsize.graph` - Font size for graphs in
+#' points. Default: 10} \item{`tidytlg.fontsize.listing` - Font size for listings
+#' in points. Default: 8} \item{`tidytlg.right.padding` - Amount of right padding
+#' for cells in points. Default: 1} \item{`tidytlg.left.padding` - Amount of left
+#' padding for cells in points. Default: 1}
+#' \item{`tidytlg.stat_labels` - Labels
 #' to be used for each summary statistic in the output table.  Will need to have
 #' all available statistics if this option is changed!}
-#' \item{tidytlg.precision.extra - Value to be added on for each summary
+#' \item{`tidytlg.precision.extra` - Value to be added on for each summary
 #' statistic when calculating precision.  This will be used to make different
 #' statistics have different precision as needed}
-#' \item{tidytlg.nested_freq.statlist.default - Default statlist object for
-#' nested_freq tables. Default: statlist("n (x.x)")}
-#' \item{tidytlg.univar.statlist.default - Default statlist object for univar
-#' tables. Default: statlist(c("N", "MEANSD", "MEDIAN", "RANGE", "IQRANGE"))}
-#' \item{tidytlg.freq.statlist.default - Default statlist object for freq
-#' tables. Default: statlist("n (x.x)")} \item{tidytlg.stat_labels - A
-#' data.frame controlling how the stats are labeled in a univar table. See
-#' 'Default Stat Labels' section for defaults.} \item{tidytlg.denoms.message - A
-#' boolean, should a message print detailing what the denominators are?}
+#' \item{`tidytlg.nested_freq.statlist.default` - Default `statlist` object for
+#' nested_freq tables. Default: `statlist("n (x.x)")`}
+#' \item{`tidytlg.univar.statlist.default` - Default `statlist` object
+#' for `univar` tables.
+#' Default: `statlist(c("N", "MEANSD", "MEDIAN", "RANGE", "IQRANGE"))`}
+#' \item{`tidytlg.freq.statlist.default` - Default `statlist` object
+#' for frequency tables. Default: `statlist("n (x.x)")`}
+#' \item{`tidytlg.stat_labels` - A `data.frame` controlling how the stats
+#' are labeled in a `univar` table. See 'Default Stat Labels' section
+#' for defaults.}
+#' \item{`tidytlg.denoms.message` - A `boolean`, should a message print
+#' detailing what the denominators are?}
 #' }
 #'
 #' @section Default Stat Labels:
 #'
 #' | **stat** | **label** |
 #' | --- | --- |
-#' | N | N |
-#' | SUM | Sum |
-#' | MEAN | Mean |
-#' | GeoMEAN | Geometric Mean |
-#' | SD | Std. Dev. |
-#' | SE | Std. Error |
-#' | GSD | Geometric Std. Dev. |
-#' | GSE | Geometric Std. Error |
-#' | CV | CV |
-#' | MEANSD | Mean (SD) |
-#' | MEANSE | Mean (SE) |
-#' | MEDIAN | Median |
-#' | MIN | Minimum |
-#' | MAX | Maximum |
-#' | RANGE | Range |
-#' | Q1 | First quartile |
-#' | Q3 | Third quartile |
-#' | IQRANGE | IQ range |
-#' | MEDRANGE | Median (Range) |
-#' | MEDIQRANGE | Median (Q1; Q3) |
-#' | MEAN_CI | Mean (95% C.I.) |
-#' | GeoMEAN_CI | Geometric Mean (95% C.I.) |
+#' | `N` | N |
+#' | `SUM` | Sum |
+#' | `MEAN` | Mean |
+#' | `GeoMEAN` | Geometric Mean |
+#' | `SD` | Std. Deviation |
+#' | `SE` | Std. Error |
+#' | `GSD` | Geometric Std. Deviation |
+#' | `GSE` | Geometric Std. Error |
+#' | `CV` | CV |
+#' | `MEANSD` | Mean (SD) |
+#' | `MEANSE` | Mean (SE) |
+#' | `MEDIAN` | Median |
+#' | `MIN` | Minimum |
+#' | `MAX` | Maximum |
+#' | `RANGE` | Range |
+#' | `Q1` | First quartile |
+#' | `Q3` | Third quartile |
+#' | `IQRANGE` | IQ range |
+#' | `MEDRANGE` | Median (Range) |
+#' | `MEDIQRANGE` | Median (Q1; Q3) |
+#' | `MEAN_CI` | Mean (95% C.I.) |
+#' | `GeoMEAN_CI` | Geometric Mean (95% C.I.) |
 #'
 #' @section Default Precision Extra:
 #'
 #' | **stat** | **extra** |
 #' | --- | --- |
-#' |N| 0 |
-#' |SUM| 0 |
-#' |MEAN| 1 |
-#' |GeoMEAN| 1 |
-#' |SD| 2 |
-#' |SE| 2 |
-#' |GSD| 2 |
-#' |GSE| 2 |
-#' |CV| 1 |
-#' |MEDIAN| 1 |
-#' |MIN| 0 |
-#' |MAX| 0 |
-#' |Q1| 1 |
-#' |Q3| 1 |
-#' |LCL_MEAN| 2 |
-#' |UCL_MEAN| 2 |
-#' |LCL_GeoMEAN| 2 |
-#' |UCL_GeoMEAN| 2 |
+#' |`N` | 0 |
+#' |`SUM`| 0 |
+#' |`MEAN`| 1 |
+#' |`GeoMEAN`| 1 |
+#' |`SD`| 2 |
+#' |`SE`| 2 |
+#' |`GSD`| 2 |
+#' |`GSE`| 2 |
+#' |`CV`| 1 |
+#' |`MEDIAN`| 1 |
+#' |`MIN`| 0 |
+#' |`MAX`| 0 |
+#' |`Q1`| 1 |
+#' |`Q3`| 1 |
+#' |`LCL_MEAN`| 2 |
+#' |`UCL_MEAN`| 2 |
+#' |`LCL_GeoMEAN`| 2 |
+#' |`UCL_GeoMEAN`| 2 |
 #'
 #' @section Updating Options:
 #' \itemize{
@@ -152,10 +155,9 @@ utils::globalVariables(c(
 NULL
 
 
-
 .onLoad <- function(libname, pkgname) {
   op <- options()
-  op.tidytlg <- list(
+  op_tidytlg <- list(
     tidytlg.row_type.levels =
       c(
         "TABLE_BY_HEADER",
@@ -227,8 +229,8 @@ NULL
     tidytlg.add_datetime = TRUE
   )
 
-  toset <- !(names(op.tidytlg) %in% names(op))
-  if (any(toset)) options(op.tidytlg[toset])
+  toset <- !(names(op_tidytlg) %in% names(op))
+  if (any(toset)) options(op_tidytlg[toset])
 
   invisible()
 }

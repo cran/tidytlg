@@ -2,55 +2,59 @@
 #'
 #' Frequency counts and percentages for a variable by treatment and/or group.
 #'
-#' @param df (required) dataframe containing records to summarize by treatment
+#' @param df (required) dataframe containing records to summarize by treatment.
 #' @param denom_df (optional) dataframe used for population based denominators
-#'  (default = df)
-#' @param colvar (required) treatment variable within df to use to summarize
-#' @param tablebyvar (optional) repeat entire table by variable within df
-#' @param rowvar (required) character vector of variables to summarize within the
-#'  dataframe
-#' @param rowbyvar (optional) repeat `rowvar` by variable within df
-#' @param statlist (optional) statlist object of stats to keep of length 1 or 2 specifying list
-#'  of statistics and format desired (e.g statlist(c("N", "n (x.x\%)"))) (default = statlist(c("n
-#'  (x.x)")))
-#' @param decimal (optional) decimal precision root level default (default = 1)
-#' @param nested (optional) INTERNAL USE ONLY. The default should not be changed.
-#'  Switch on when this function is called by `nested_freq()` so we will not include
-#'  the by variables as part of the group denominators (default = FALSE)
+#'  (default = `df`).
+#' @param colvar (required) treatment variable within `df` to use to summarize
+#' @param tablebyvar (optional) repeat entire table by variable within `df`
+#' @param rowvar (required) character vector of variables to
+#'  summarize within the dataframe.
+#' @param rowbyvar (optional) repeat `rowvar` by variable within `df`
+#' @param statlist (optional) `statlist` object of stats to keep of length
+#'  1 or 2 specifying list of statistics and format desired
+#'  (e.g `statlist(c("N", "n (x.x\%)"))`) (default = `statlist(c("n
+#'  (x.x)"))`).
+#' @param decimal (optional) decimal precision root level default (default = 1).
+#' @param nested (optional) INTERNAL USE ONLY. The default should
+#'  not be changed. Switch on when this function is called by
+#'  `nested_freq()` so we will not include the by variables as
+#'   part of the group denominators (default = `FALSE`).
 #' @param cutoff (optional) percentage cutoff threshold. This can be passed as a
 #'  numeric cutoff, in that case any rows with greater than or equal to that
 #'  cutoff will be preserved, others will be dropped. To specify a single column
 #'  to define the cutoff logic, pass a character value of the form
 #' `<colName> >= <value>` and only that column will be used.
-#' @param cutoff_stat (optional) The value to cutoff by, n or pct. (default =
-#'  'pct'). Can be done with multiple columns by adding & or | ex. `col1` >=
-#'  `val1` & `col2` >= `val2`
+#' @param cutoff_stat (optional) The value to cutoff by, `n` or `pct.`
+#'  (default = `'pct'`). Can be done with multiple columns
+#'  by adding `&` or `|` ex. `col1 >= val1 & col2 >= val2`.
 #' @param subset (optional) An R expression that will be passed to a
-#'  `dplyr::filter()` function to subset the data.frame. This is performed on
-#'  the numerator before any other derivations. Denominators must be
-#'  preprocessed and passed through using `denom_df`.
+#'  [`dplyr::filter()`] function to subset the `data.frame`.
+#'  This is performed on the numerator before any other
+#'  derivations. Denominators must be preprocessed and passed
+#'  through using `denom_df`.
 #' @param descending_by (optional) The column or columns to sort descending
 #'  counts. Can also provide a named list to do ascending order ex.
-#'  c("VarName1" = "asc", "VarName2" = "desc") would sort by VarName1 in
-#'  ascending order and VarName2 in descending order. In case of a tie in count
-#'  or `descending_by` not provided, the columns will be sorted alphabetically.
-#' @param display_missing (optional) Should the "missing" values be displayed? If
-#'  missing values are displayed, denominators will include missing values.
-#'  (default = FALSE)
+#'  `c("VarName1" = "asc", "VarName2" = "desc")` would sort by `VarName1` in
+#'  ascending order and `VarName2` in descending order.
+#'  In case of a tie in count or `descending_by` not provided,
+#'  the columns will be sorted alphabetically.
+#' @param display_missing (optional) Should the "missing" values be displayed?
+#'  If missing values are displayed, denominators will include missing values.
+#'  (default = `FALSE`).
 #' @param rowtext (optional) A character vector used to rename the `label`
 #'  column. If named, names will give the new level and values will be the
-#'  replaced value. If unnamed, and the table has only one row, the rowtext will
-#'  rename the label of the row. If the rowtext is unnamed, the table has no
-#'  rows, and there is a subset, the table will be populated with zeros and the
-#'  label will be the only row.
+#'  replaced value. If unnamed, and the table has only one row, the `rowtext`
+#'  will rename the label of the row. If the `rowtext` is unnamed,
+#'  the table has no rows, and there is a subset,
+#'  the table will be populated with zeros and the label will be the only row.
 #' @param row_header (optional) A character vector to be added to the table.
-#' @param .keep (optional) Should the `rowbyvar` and `tablebyvar` be output in the
-#'  table.  If FALSE, `rowbyvar` will still be output in the `label` column.
-#'  (default = TRUE)
+#' @param .keep (optional) Should the `rowbyvar` and `tablebyvar` be
+#'  output in the table. If `FALSE`, `rowbyvar` will still be
+#'  output in the `label` column. (Default = `TRUE`).
 #' @param .ord Should the ordering columns be output with the table? This is
 #'  useful if a table needs to be merged or reordered in any way after build.
 #' @param pad (optional) A boolean that controls if levels with zero records
-#'  should be included in the final table. (default = TRUE)
+#'  should be included in the final table. (default = `TRUE`).
 #' @param ... (optional) Named arguments to be included as columns on the table.
 #'
 #' @section Sorting a 'freq' table:
@@ -58,8 +62,8 @@
 #'  By default, a frequency table is sorted based on the factor level of the
 #'  `rowvar` variable. If the `rowvar` variable isn't a factor, it will be
 #'  sorted alphabetically. This behavior can be modified in two ways, the first
-#'  is the `char2factor()` function that offers a interface for releveling a
-#'  variable based on a numeric variable, like VISITN. The second is based on
+#'  is the `char2factor()` function that offers a interface for discretization a
+#'  variable based on a numeric variable, like `VISITN`. The second is based on
 #'  the `descending_by` argument which will sort based on counts on a variable.
 #'
 #' @return A dataframe of results
@@ -275,7 +279,7 @@ freq <- function(df,
       rowbyvar = rowbyvar,
       colvar = colvar,
       rowvar = rowvar,
-      hasBigN = "N" %in% statlist[["stats"]],
+      has_big_n = "N" %in% statlist[["stats"]],
       row_header = row_header
     ) %>%
     # Pivot table
@@ -351,7 +355,9 @@ derive_freq <- function(df, denom_df, colvar, rowbyvar, tablebyvar, rowvar,
   # turn this into a HEADER
   if (nested) {
     row_type_value <- "NESTED"
-  } else if (!is.null({{ rowtext }}) &&
+  } else if (!is.null(
+    {{ rowtext }}
+  ) &&
     !is_named({{ rowtext }}) &&
     nrow(res) == length(unique(res[[colvar]])) &&
     !("N" %in% statlist[["stats"]])) {
@@ -496,38 +502,39 @@ drop_values <- function(df, cutoff, rowvar, cutoff_stat, colvar, drop_by) {
   # If there is no cutoff, just return the dataframe
   if (is.null(cutoff)) {
     df
-  } # If there is a cutoff:
-  else {
+  } else { # If there is a cutoff:
     # If the cutoff specifies a column name:
     if (grepl(">=", cutoff)) {
-      cutoff <- paste0("`", cutoff %>%
-        stringr::str_replace_all("& ", "& `") %>%
-        stringr::str_replace_all("\\| ", "| `") %>%
-        stringr::str_replace_all(" >=", "` >="))
+      cutoff <- paste0(
+        "`", cutoff |>
+          stringr::str_replace_all("& ", "& `") |>
+          stringr::str_replace_all("\\| ", "| `") |>
+          stringr::str_replace_all(" >=", "` >=")
+      )
       cutoff <- as.list(parse(text = cutoff))
 
       pivot_id_cols <- unname(c(drop_by, rowvar, "nested_level", "row_type"))
       kept_values <- suppressMessages(
-        df %>%
+        df |>
           pivot_wider(
             id_cols = any_of(pivot_id_cols),
             names_from = all_of(colvar),
             values_from = all_of(c(cutoff_stat)),
             values_fill = 0
-          ) %>%
+          ) |>
           # Get a list of values from specified column that are >= to the cutoff
-          filter(!!!cutoff) %>%
-          select(!!rowvar) %>%
+          filter(!!!cutoff) |>
+          select(!!rowvar) |>
           unlist()
       )
 
       # If the column name doesn't specify a column name:
     } else {
       # Determine the values to keep
-      kept_values <- df %>%
+      kept_values <- df |>
         # Get a list of values that have a value >= the cutoff
-        filter(!!sym(cutoff_stat) >= as.numeric(trimws(cutoff))) %>%
-        select(!!rowvar) %>%
+        filter(!!sym(cutoff_stat) >= as.numeric(trimws(cutoff))) |>
+        select(!!rowvar) |>
         unlist()
     }
     # Filter everything that wasn't found above.
@@ -654,7 +661,7 @@ sort_freq <- function(df,
         add_row(row_header_df %>% slice(i), .before = row_header_location[i])
     }
   }
-  return(df %>% select(-any_of(paste0("n", colvar_cols))))
+  df |> select(-any_of(paste0("n", colvar_cols)))
 }
 
 #' Round values in a freq table
@@ -664,7 +671,7 @@ sort_freq <- function(df,
 #' @noRd
 round_freq <- function(df, decimal) {
   # format pct using roundSAS
-  df %>%
+  df |>
     mutate(pct = roundSAS(pct, digits = as.numeric(decimal), as_char = TRUE))
 }
 
@@ -782,9 +789,10 @@ pivot_freq <- function(df, colvar, rowvar, rowbyvar, tablebyvar, statlist,
         across(
           .cols = paste0("n", levels(df[[colvar]])),
           function(x) {
-            ifelse(row_type %>%
-              stringr::str_detect("HEADER"),
-            max(x, na.rm = TRUE) + n() + 1 - row_number(), x
+            ifelse(
+              row_type |>
+                stringr::str_detect("HEADER"),
+              max(x, na.rm = TRUE) + n() + 1 - row_number(), x
             )
           }
         )
@@ -867,14 +875,14 @@ rowtext_freq <- function(res, rowtext, rowvar, rowbyvar, tablebyvar,
 
 #' Logic for merging in bigN and rowbyvar
 #'
-#' @param hasBigN boolean. Does the table have a big N in the statlist?
+#' @param has_big_n boolean. Does the table have a big N in the statlist?
 #'
 #' @noRd
-byvar_merge_freq <- function(df, tablebyvar, rowbyvar, colvar, rowvar, hasBigN,
+byvar_merge_freq <- function(df, tablebyvar, rowbyvar, colvar, rowvar, has_big_n,
                              row_header) {
-  df %>%
-    bigN_merge(colvar, rowvar, rowbyvar, tablebyvar, hasBigN) %>%
-    row_header_merge(colvar, rowvar, rowbyvar, tablebyvar, row_header) %>%
+  df |>
+    big_n_merge(colvar, rowvar, rowbyvar, tablebyvar, has_big_n) |>
+    row_header_merge(colvar, rowvar, rowbyvar, tablebyvar, row_header) |>
     rowbyvar_merge(colvar, rowvar, rowbyvar, tablebyvar)
 }
 
@@ -900,8 +908,8 @@ add_meta_freq <- function(table, df, colvar, tablebyvar) {
 
 #' Merge in bigN rows
 #' @noRd
-bigN_merge <- function(df, colvar, rowvar, rowbyvar, tablebyvar, hasBigN) {
-  if (hasBigN) {
+big_n_merge <- function(df, colvar, rowvar, rowbyvar, tablebyvar, has_big_n) {
+  if (has_big_n) {
     df %>%
       var_merge(
         nestby = c(colvar, rowbyvar, tablebyvar),

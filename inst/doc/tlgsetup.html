@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -337,17 +338,17 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Column Metadata &amp; How tidytlg Sets Up
-Your Data Using tlgsetup</h1>
+Your Data Using <code>tlgsetup</code></h1>
 
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidytlg)</span></code></pre></div>
-<p>The tlgsetup helper function was created to support generating
-different column structures for our outputs. This allows us to specify
-column types once that can be used across multiple outputs. This
-metadata can be hardcoded as well (please see the code below), or pulled
-from another source like a dataframe, file or database.</p>
+<p>The <code>tlgsetup</code> helper function was created to support
+generating different column structures for our outputs. This allows us
+to specify column types once that can be used across multiple outputs.
+This metadata can be hardcoded as well (please see the code below), or
+pulled from another source like a dataframe, file or database.</p>
 <p>Here we see an example of the column metadata which defines our
 columns, how to combine columns, column labels and spanning headers
 across columns.</p>
@@ -360,32 +361,38 @@ across columns.</p>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="st">&quot;type1&quot;</span>,  <span class="st">&quot;54+81&quot;</span>, <span class="st">&quot;Total Xanomeline&quot;</span>,     <span class="st">&quot;&quot;</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  )</span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>column_metadata</span></code></pre></div>
-<table class="huxtable" data-quarto-disable-processing="true" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  ">
-<col><col><col><col><tr>
-<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">tbltype</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">coldef</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">decode</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">span1</th></tr>
+<table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
+<col><col><col><col><thead>
 <tr>
-<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">0</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Placebo</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;"></td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0.4pt;">tbltype</th><th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;">coldef</th><th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;">decode</th><th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0pt;">span1</th></tr>
+</thead>
+<tbody>
 <tr>
-<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">54</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Low Dose</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Xanomeline</td></tr>
+<td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0.4pt;     background-color: rgb(242, 242, 242);">type1</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;     background-color: rgb(242, 242, 242);">0</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;     background-color: rgb(242, 242, 242);">Placebo</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0pt 0pt;     background-color: rgb(242, 242, 242);"></td></tr>
 <tr>
-<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">81</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">High Dose</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Xanomeline</td></tr>
+<td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;">type1</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">54</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">Low Dose</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;">Xanomeline</td></tr>
 <tr>
-<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">type1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">54+81</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Total Xanomeline</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0.4pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td></tr>
+<td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0.4pt;     background-color: rgb(242, 242, 242);">type1</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;     background-color: rgb(242, 242, 242);">81</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;     background-color: rgb(242, 242, 242);">High Dose</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0.4pt 0pt 0pt;     background-color: rgb(242, 242, 242);">Xanomeline</td></tr>
+<tr>
+<td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0.4pt;">type1</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">54+81</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">Total Xanomeline</td><td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0pt 0.4pt 0.4pt 0pt;"></td></tr>
+</tbody>
 </table>
 
-<p>In this example, we would summarize Placebo, Xanomeline Low Dose, and
-Xanomeline High Dose which are already available in the data. The helper
-function will add the observations to the data for the Total Xanomeline
-column based off of <code>coldef</code>. So for our adsl data, we will
-add a spanning header for Xanomeline and a total Xanomeline column which
-is a combination of the Xanomeline Low Dose and Xanomeline High
-Dose.</p>
+<p>In this example, we would summarize <code>Placebo</code>,
+<code>Xanomeline Low Dose</code>, and <code>Xanomeline High Dose</code>
+which are already available in the data. The helper function will add
+the observations to the data for the <code>Total Xanomeline</code>
+column based off of <code>coldef</code>. So for our <code>adsl</code>
+data, we will add a spanning header for <code>Xanomeline</code> and a
+total <code>Xanomeline</code> column which is a combination of the
+<code>Xanomeline Low Dose</code> and
+<code>Xanomeline High Dose</code>.</p>
 <p>In addition, the helper function will add the factor variable
 <code>colnbr</code> which is used as our new column summary variable.
 Note that our column summary variable has been converted to a factor.
 This is required and allows us to define column order as well as label
 in one variable.</p>
-<p>Let’s read in adsl and check the dimensions.</p>
+<p>Let’s read in <code>adsl</code> and check the dimensions.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;cdisc_adsl&quot;</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">filter</span>(ITTFL <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>) <span class="sc">%&gt;%</span></span>
@@ -401,9 +408,9 @@ in one variable.</p>
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; $ RACE    &lt;chr&gt; &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;, &quot;WHITE&quot;,…</span></span>
 <span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; $ AGE     &lt;dbl&gt; 63, 64, 85, 52, 84, 74, 68, 81, 84, 71, 71, 77, 81, 75, 57</span></span></code></pre></div>
 <pre><code>#&gt; [1] &quot;Dimensions prior to the tlgsetup call are 15 rows and 7 columns.&quot;</code></pre>
-<p>Now let’s pass the adsl data through our tlgsetup function to add
-observations to support the <code>type1</code> column structure and
-check out the dimensions.</p>
+<p>Now let’s pass the <code>adsl</code> data through our
+<code>tlgsetup</code> function to add observations to support the
+<code>type1</code> column structure and check out the dimensions.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>setup_table <span class="ot">&lt;-</span> <span class="fu">tlgsetup</span>(adsl,</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">var =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">column_metadata =</span> column_metadata</span>

@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -336,31 +337,34 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Manipulating tbl data frame</h1>
+<h1 class="title toc-ignore">Manipulating <code>tbl</code> data
+frame</h1>
 
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>The <code>tbl</code> data frame is the main input to the
-<code>gentlg</code> function for creating the RTF/HTML outputs. This
+<code>gentlg</code> function for creating the RTF or HTML outputs. This
 vignette will show you the <code>tbl</code> structure and how the
-<code>tbl</code> variables are in action for rendering the RTF/HTML
+<code>tbl</code> variables are in action for rendering the RTF or HTML
 outputs.</p>
 <div id="basic-tbl-data-frame" class="section level3">
-<h3>Basic tbl data frame</h3>
-<p>The basic variables of tbl includes label, col1, col2, …, coln,
-where</p>
+<h3>Basic <code>tbl</code> data frame</h3>
+<p>The basic variables of <code>tbl</code> includes <code>label</code>,
+<code>col1</code>, <code>col2</code>, <code>...</code>,
+<code>coln</code>, where</p>
 <ul>
-<li><p>label: row text displayed on the 1st column of the table</p></li>
-<li><p>col1: statistic results displayed on the 2nd column of the
-table</p></li>
-<li><p>col2: statistic results displayed on the 3rd column of the
-table.</p></li>
+<li><code>label</code>: row text displayed on the first column of the
+table</li>
+<li><code>col1</code>: statistic results displayed on the second column
+of the table</li>
+<li><code>col2</code>: statistic results displayed on the third column
+of the table.</li>
 </ul>
-<p>The example below shows you a very basic tbl data frame, and how this
-tbl is transformed through the <code>gentlg</code> function call to
-create the HTML output.</p>
+<p>The example below shows you a very basic <code>tbl</code> data frame,
+and how this <code>tbl</code> is transformed through the
+<code>gentlg</code> function call to create the HTML output.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidytlg)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
@@ -427,8 +431,8 @@ create the HTML output.</p>
 <span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt;    Analysis Set: ITT            86                84                84         </span></span>
 <span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt;    Age (Years)                                                                 </span></span>
 <span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt;    N                            86                84                84         </span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo1.html][] 02JUL2025,           </span></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt;                                                                17:43           </span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo1.html][] 19DEC2025,           </span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt;                                                                08:23           </span></span>
 <span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; Column names: label, col1, col2, col3</span></span></code></pre></div>
 </div>
@@ -440,9 +444,9 @@ table. To enable formatting, additional variables will need to be
 created in the <code>tbl</code> data frame.</p>
 <div id="add-new-row" class="section level3">
 <h3>Add new row</h3>
-<p>For inserting a blank line prior to the 2nd row (i.e. Age (Years)),
-we will need to add the <code>newrows</code> variable with value =
-<code>1</code>.</p>
+<p>For inserting a blank line prior to the second row
+(i.e. <code>Age (Years)</code>), we will need to add the
+<code>newrows</code> variable with <code>value = 1</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">newrows =</span> <span class="fu">case_when</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    label <span class="sc">==</span> <span class="st">&quot;Age (Years)&quot;</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
@@ -510,16 +514,17 @@ we will need to add the <code>newrows</code> variable with value =
 <span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt;                                                                                </span></span>
 <span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt;    Age (Years)                                                                 </span></span>
 <span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt;    N                            86                84                84         </span></span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo2.html][] 02JUL2025,           </span></span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt;                                                                17:43           </span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo2.html][] 19DEC2025,           </span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt;                                                                08:23           </span></span>
 <span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; Column names: label, col1, col2, col3</span></span></code></pre></div>
 </div>
 <div id="add-indentation" class="section level3">
 <h3>Add indentation</h3>
-<p>For adding 1 indentation to the <code>N</code> row, we will need to
-add the <code>indentme</code> variable with value = 1, which indicates 1
-indentation (2 will result in 2 indentation, and so on).</p>
+<p>For adding one indentation to the <code>N</code> row, we will need to
+add the <code>indentme</code> variable with <code>value = 1</code>,
+which indicates one indentation (two will result in two indentation, and
+so on).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">indentme =</span> <span class="fu">case_when</span>(</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    label <span class="sc">==</span> <span class="st">&quot;N&quot;</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
@@ -609,15 +614,16 @@ indentation (2 will result in 2 indentation, and so on).</p>
 <span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a><span class="co">#&gt;    -17.76px;                                                                   </span></span>
 <span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a><span class="co">#&gt;    padding-left:                                                               </span></span>
 <span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="co">#&gt;    35.52px&#39;&gt; N                                                                 </span></span>
-<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo3.html][] 02JUL2025,           </span></span>
-<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a><span class="co">#&gt;                                                                17:43           </span></span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo3.html][] 19DEC2025,           </span></span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a><span class="co">#&gt;                                                                08:23           </span></span>
 <span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a><span class="co">#&gt; Column names: label, col1, col2, col3</span></span></code></pre></div>
 </div>
 <div id="enable-bold-font" class="section level3">
 <h3>Enable bold font</h3>
-<p>To enable bolding on the row of <code>Age (Years)</code>, the
-<code>boldme</code> variable with value = 1 will need to be added.</p>
+<p>To enable bold font on the row of <code>Age (Years)</code>, the
+<code>boldme</code> variable with <code>value = 1</code> will need to be
+added.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">boldme =</span> <span class="fu">case_when</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    label <span class="sc">==</span> <span class="st">&quot;Age (Years)&quot;</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
@@ -711,8 +717,8 @@ indentation (2 will result in 2 indentation, and so on).</p>
 <span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a><span class="co">#&gt;    -17.76px;                                                                   </span></span>
 <span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">#&gt;    padding-left:                                                               </span></span>
 <span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="co">#&gt;    35.52px&#39;&gt; N                                                                 </span></span>
-<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo4.html][] 02JUL2025,           </span></span>
-<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">#&gt;                                                                17:43           </span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo4.html][] 19DEC2025,           </span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">#&gt;                                                                08:23           </span></span>
 <span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co">#&gt; Column names: label, col1, col2, col3</span></span></code></pre></div>
 <p>There is another formatting variable called <code>newpage</code>,
@@ -720,27 +726,28 @@ where assigning <code>newpage = 1</code> will start a new page in the
 output.</p>
 </div>
 </div>
-<div id="fomatting-functions" class="section level2">
-<h2>Fomatting functions</h2>
+<div id="formatting-functions" class="section level2">
+<h2>Formatting functions</h2>
 <p>Besides manually adding the formatting variables to <code>tbl</code>,
 we have developed several formatting functions to facilitate the
 formatting process:</p>
 <ul>
-<li><p><code>add_newrows</code>: add <code>newrows</code> variable to
-the <code>tbl</code> based on <code>row_type</code></p></li>
-<li><p><code>add_indent</code>: add <code>indentme</code> variable to
-the <code>tbl</code> based on <code>row_type</code></p></li>
-<li><p><code>add_newpage</code>: add <code>newpage</code> variable to
-the <code>tbl</code> based on <code>row_type</code>.</p></li>
+<li><code>add_newrows</code>: add <code>newrows</code> variable to the
+<code>tbl</code> based on <code>row_type</code></li>
+<li><code>add_indent</code>: add <code>indentme</code> variable to the
+<code>tbl</code> based on <code>row_type</code></li>
+<li><code>add_newpage</code>: add <code>newpage</code> variable to the
+<code>tbl</code> based on <code>row_type</code>.</li>
 </ul>
-<p>The <code>row_type</code> variable is created in the tbl by calling
-the <code>freq</code>, <code>nested_freq</code>, and <code>univar</code>
-functions, which is used by the above functions for setting up the
-formatting variables. The <code>tbl</code> example below is obtained by
-calling the <code>univar</code> function for summarizing the age
-statistics in the CDISC ADSL dataset. After calling the
-<code>univar</code> function, we create the <code>anbr</code> (analysis
-number) variable as the identifier of this <code>tbl</code> chunk.</p>
+<p>The <code>row_type</code> variable is created in the <code>tbl</code>
+by calling the <code>freq</code>, <code>nested_freq</code>, and
+<code>univar</code> functions, which is used by the above functions for
+setting up the formatting variables. The <code>tbl</code> example below
+is obtained by calling the <code>univar</code> function for summarizing
+the age statistics in the <code>CDISC</code> <code>ADSL</code> dataset.
+After calling the <code>univar</code> function, we create the
+<code>anbr</code> (analysis number) variable as the identifier of this
+<code>tbl</code> chunk.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> cdisc_adsl <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">univar</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">colvar =</span> <span class="st">&quot;TRT01PN&quot;</span>,</span>
@@ -924,15 +931,16 @@ to the <code>tbl</code> for creating the formatting variables.</p>
 <span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="co">#&gt;    -17.76px;                                                                   </span></span>
 <span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="co">#&gt;    padding-left:                                                               </span></span>
 <span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a><span class="co">#&gt;    53.28px&#39;&gt; Mean (SD)                                                         </span></span>
-<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo5.html][] 02JUL2025,           </span></span>
-<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a><span class="co">#&gt;                                                                17:43           </span></span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="co">#&gt;      &lt;div style=&#39;border-bottom:1pt solid&#39;&gt; [demo5.html][] 19DEC2025,           </span></span>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a><span class="co">#&gt;                                                                08:23           </span></span>
 <span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a><span class="co">#&gt; Column names: label, 0, 54, 81</span></span></code></pre></div>
-<p>The default indentation for each row_type is shown below.</p>
+<p>The default indentation for each <code>row_type</code> is shown
+below.</p>
 <table>
 <thead>
 <tr class="header">
-<th>row_type</th>
+<th><code>row_type</code></th>
 <th align="center">default indentation</th>
 </tr>
 </thead>
