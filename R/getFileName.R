@@ -3,12 +3,12 @@
 #' @description This function returns the file path up until the program's
 #'   name.
 #'
-#' @author Steven haesendonckx {shaesen2@@its.jnj.com}
+#' @author Steven Haesendonckx, \email{shaesen2@@its.jnj.com}
 #'
-#' @return The file path up untill the program's name.
-#' @param file name of the file
-#'
-#' @noRd
+#' @return The file path up until the program's name.
+#' @export
+#' @examples
+#' get_file_name()
 get_file_name <- function() {
   ##### If run from MCD BATCH\
   file_name <- get_file_name_batch(commandArgs(trailingOnly = FALSE))

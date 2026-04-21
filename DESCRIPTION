@@ -1,6 +1,6 @@
 Package: tidytlg
 Title: Create TLGs using the 'tidyverse'
-Version: 0.11.0
+Version: 0.12.0
 Language: en-US
 Authors@R: 
      c(person(given = "Nicholas",
@@ -71,7 +71,7 @@ Depends: R (>= 4.1.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2025-12-19 07:23:49 UTC; kpagacz
+Packaged: 2026-04-21 10:22:49 UTC; kpagacz
 Author: Nicholas Masel [aut],
   Steven Haesendonckx [aut],
   Pelagia Alexandra Papadopoulou [aut],
@@ -84,4 +84,4 @@ Author: Nicholas Masel [aut],
   Konrad Pagacz [aut, cre]
 Maintainer: Konrad Pagacz <kpagacz@its.jnj.com>
 Repository: CRAN
-Date/Publication: 2025-12-19 08:00:02 UTC
+Date/Publication: 2026-04-21 13:50:02 UTC

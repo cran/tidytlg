@@ -34,9 +34,12 @@
 #' cm for figure outputs. (Default = 6)
 #' @param plotheight (optional) Numerical value that indicates the plot height
 #' in cm for figure outputs. (Default = 5)
-#' @param wcol (optional) Can be a single numerical value that represents the
-#' width of the first column or a vector, specifying the lengths of all columns
-#' in the final table or listing.\cr
+#' @param wcol (optional) Can be one of:
+#' - a single numeric value that represents the width of the first column
+#' - a numeric vector, specifying the widths of all columns in the final table or listing
+#' - a list of numeric vectors (applicable when `huxme` is a list). Each element
+#' can specify the widths of all columns or the width of the first column only\cr
+#'
 #' When a single numerical value is used, this will be taken as the column width
 #' for the first column. The other columns will be equally spaced across the
 #' remainder of the available space. Alternatively, a vector can be used to
@@ -91,6 +94,8 @@
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`, which are passed to
 #' [huxtable::set_align()] to set the alignments.
+#' @param footers_one_row (optional) Logical. Whether to export the footers
+#' as a single table row (Default = `FALSE`).
 #'
 #' @section `Huxme` Details:
 #' For tables and listings, formatting of the output can be dictated through the
@@ -191,6 +196,26 @@
 #'   )
 #' )
 #'
+#' final_2 <- data.frame(
+#'   label = c(
+#'     "Overall", "Safety Analysis Set",
+#'     "Any Adverse event{\\super a}", "- Serious Adverse Event"
+#'   ),
+#'   Drug_A = c("", "40", "10 (25%)", "0"),
+#'   Drug_B = c("", "40", "10 (25%)", "0")
+#' )
+#'
+#' gentlg(
+#'   huxme = list(final_2, final_2),
+#'   wcol = list(c(0.70, 0.15, 0.15), c(0.5)),
+#'   file = "TSFAEX",
+#'   title = "This is Amazing Demonstration 1",
+#'   footers = c(
+#'     "Note: For demonstrative purposes only",
+#'     "{\\super a} Subjects are counted once for any given event."
+#'   )
+#' )
+#'
 #' # Produce output in HTML format
 #' hux <- gentlg(
 #'   huxme = final,
@@ -233,12 +258,30 @@ gentlg <- function(huxme = NULL,
                    pagenum = FALSE,
                    bottom_borders = "old_format",
                    border_fns = list(),
-                   alignments = list()) {
+                   alignments = list(),
+                   footers_one_row = FALSE) {
   # Validate `alignments` here because of its complicated data structure
   stopifnot("`alignments` must be a list" = is.list(alignments))
 
   for (alignment in alignments) {
     stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
+  }
+
+  # if wcol is a list, then huxme must be a list with same length,
+  # and wcol[[i]] must be a length 1 vector or a vector with as many numeric values
+  # as number of columns in huxme[[i]]
+  if (is.list(wcol)) {
+    assertthat::assert_that(is.list(huxme) && !is.data.frame(huxme),
+      msg = paste0(
+        "'wcol' appears to be a list while huxme is not a list of tables/listings. ",
+        "If you intended 'wcol' to apply to the single output, convert it to a ",
+        "vector, otherwise pass a non-data.frame list to 'huxme'."
+      )
+    )
+    ## already know wcol is a list and huxme is a non-data.frame list
+    assertthat::assert_that(length(huxme) == length(wcol),
+      msg = "Arguments 'wcol' and 'huxme' must have the same length."
+    )
   }
 
   adjfilename <- stringr::str_replace_all(
@@ -268,7 +311,8 @@ gentlg <- function(huxme = NULL,
       pagenum = pagenum,
       bottom_borders = bottom_borders,
       border_fns = border_fns,
-      alignments = alignments
+      alignments = alignments,
+      footers_one_row = footers_one_row
     )
 
     if (print.hux == FALSE) {
@@ -332,6 +376,10 @@ gentlg <- function(huxme = NULL,
     alignments <- list(alignments)
   }
 
+  if (!is.list(wcol)) {
+    wcol <- list(wcol)
+  }
+
   hts <- mapply(
     function(ht,
              colspan,
@@ -343,7 +391,8 @@ gentlg <- function(huxme = NULL,
              bottom_borders,
              border_fns,
              alignments,
-             index) {
+             index,
+             wcol) {
       gentlg_single(
         huxme = ht,
         tlf = tlf,
@@ -367,25 +416,27 @@ gentlg <- function(huxme = NULL,
         bottom_borders = bottom_borders,
         border_fns = border_fns,
         alignments = alignments,
-        index_in_result = index
+        index_in_result = index,
+        footers_one_row = footers_one_row
       )
     },
-    huxme,
-    colspan,
-    title,
-    footers,
-    watermark,
-    colheader,
-    pagenum,
-    bottom_borders,
-    border_fns,
-    alignments,
-    seq_len(length(huxme)),
+    ht = huxme,
+    colspan = colspan,
+    title = title,
+    footers = footers,
+    watermark = watermark,
+    colheader = colheader,
+    pagenum = pagenum,
+    bottom_borders = bottom_borders,
+    border_fns = border_fns,
+    alignments = alignments,
+    index = seq_along(huxme),
+    wcol = wcol,
     SIMPLIFY = FALSE
   )
 
   if (print.hux == FALSE) {
-    return(lapply(hts, function(ht) ht$ht))
+    lapply(hts, function(ht) ht$ht)
   } else if (print.hux == TRUE && is_format_rtf(format)) {
     quick_rtf_jnj(lapply(hts, function(ht) ht$ht),
       file = paste(file.path(opath, adjfilename), ".rtf", sep = ""),
